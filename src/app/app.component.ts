@@ -7,4 +7,20 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'bom-e-barato';
+
+  constructor() {}
+
+  ngOnInit() {
+  }
+
+  redirectLogin() {
+
+  }
+
+  redirectRegister() {
+  }
+
+  redirectAd() {
+    
+  }
 }
