@@ -15,6 +15,7 @@ import { RegisterComponent } from './register/register.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     CreateAdComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
