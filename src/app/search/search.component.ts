@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import { Subscription } from 'rxjs';
 import { SharedService } from '../shared.service';
+import { FormBuilder, FormGroup} from '@angular/forms';
+
+export interface Task {
+  name: string;
+  completed: boolean;
+  color: ThemePalette;
+  subtasks?: Task[];
+}
 
 @Component({
   selector: 'app-search',
@@ -12,7 +21,14 @@ export class SearchComponent implements OnInit {
   filterValue: string = '';
   subscription: Subscription = new Subscription();
   
-  constructor(private _service: SharedService) {
+  //preço
+  chosen_price_range!: string;
+  price_ranges = ["Até 50", "50-150", "150-300", "300-600", "Acima de 600"];
+  
+  //vendedores
+  sellers : FormGroup;
+
+  constructor(private _service: SharedService, fb:FormBuilder) {
      this.subscription = this._service.filter.subscribe((data: string) => {
       this.filterValue = data;
       
@@ -24,8 +40,17 @@ export class SearchComponent implements OnInit {
         this.loading = false;
       }, 500);
     });
+
+    this.sellers = fb.group({
+      custojusto : false,
+      ebay : false,
+      olx : false,
+      amazon : false
+    });
   }
 
   ngOnInit(): void {
   }
+
+
 }
