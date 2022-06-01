@@ -11,9 +11,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CreateAdComponent } from './create-ad/create-ad.component';
 import { ShowProductComponent } from './show-product/show-product.component';
-import {MatCardModule} from '@angular/material/card';
-import {MatTableModule} from '@angular/material/table'
-import {MatSortModule} from '@angular/material/sort';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table'
+import { MatSortModule } from '@angular/material/sort';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -28,6 +28,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatDividerModule,
     MatGridListModule,
     MatProgressSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]
