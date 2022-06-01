@@ -10,6 +10,11 @@ import { HomeComponent } from './home/home.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CreateAdComponent } from './create-ad/create-ad.component';
+import { ShowProductComponent } from './show-product/show-product.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatTableModule} from '@angular/material/table'
+import {MatSortModule} from '@angular/material/sort';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -19,7 +24,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SearchComponent } from './search/search.component';
 import { ProductComponent } from './product/product.component';
-import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -30,6 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     HomeComponent,
     CreateAdComponent,
+    ShowProductComponent,
     LoginComponent,
     RegisterComponent,
     SearchBarComponent,
@@ -45,6 +50,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    MatCardModule,
+    MatTableModule,
+    MatSortModule,
+    NgxGalleryModule,
     MatDatepickerModule,
     MatDialogModule,
     FormsModule,
