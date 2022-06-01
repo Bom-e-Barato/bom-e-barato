@@ -15,13 +15,29 @@ import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table'
 import {MatSortModule} from '@angular/material/sort';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SearchComponent } from './search/search.component';
+import { ProductComponent } from './product/product.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CreateAdComponent,
-    ShowProductComponent
+    ShowProductComponent,
+    LoginComponent,
+    RegisterComponent,
+    SearchBarComponent,
+    SearchComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +51,17 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     MatCardModule,
     MatTableModule,
     MatSortModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatDividerModule,
+    MatCardModule,
+    MatDividerModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

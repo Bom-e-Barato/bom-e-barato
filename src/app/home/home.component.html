@@ -1,14 +1,13 @@
-<div class="row w-100 h-100">
-    <div class="row" style="background-color: lightgrey; margin: 0px !important">
-        <mat-form-field appearance="outline">
-            <mat-label>Pesquisar</mat-label>
-            <input matInput (keyup)="applyFilter($event)" #input>
-            <mat-icon class="mx-auto my-auto">search</mat-icon>
-        </mat-form-field>
-    </div>
-    
-    <div class="row"></div>
-
-    <div class="row" style="background-color: grey;"></div>
+<div class="row" style="height: 30vh;">
+    Categorias
 </div>
 
+<div class="row">
+    Destaques
+
+    <mat-grid-list cols="5" rowHeight="1:1.3">
+        <mat-grid-tile *ngFor="let prod of products">
+            <app-product [data]="prod"></app-product>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
