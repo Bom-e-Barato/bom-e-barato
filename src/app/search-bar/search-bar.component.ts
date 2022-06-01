@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedService } from '../shared.service';
 
@@ -9,14 +10,18 @@ import { SharedService } from '../shared.service';
 })
 export class SearchBarComponent implements OnInit {
   filterValue: string = '';
+  form: FormGroup = new FormGroup({
+    filter: new FormControl(''),
+    location: new FormControl('')
+  });
 
   constructor(private _router: Router, private _service: SharedService) { }
 
   ngOnInit(): void {
   }
 
-  applyFilter(event: Event) {
-    this.filterValue = (event.target as HTMLInputElement).value;
+  applySearch() {
+    this.filterValue = this.form.get('filter')?.value;//(event.target as HTMLInputElement).value;
     this._service.setFilter(this.filterValue);
 
     /* Route to the search page */
@@ -28,5 +33,8 @@ export class SearchBarComponent implements OnInit {
     if (this.filterValue.length == 0) {
       this._router.navigate(['/']);
     }
+  }
+
+  applyLocation() {
   }
 }

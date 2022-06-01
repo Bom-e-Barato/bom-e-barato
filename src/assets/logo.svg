@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.6, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 640 480" style="enable-background:new 0 0 640 480;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#FFFFFF;stroke-width:9;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#000000;stroke-width:9;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#FFFFFF;stroke-width:10;stroke-miterlimit:10;}
+	.st3{fill:none;}
+	.st4{fill:none;stroke:#FFFFFF;stroke-miterlimit:10;}
+	.st5{fill:#FFFFFF;stroke:#FFFFFF;stroke-miterlimit:10;}
+</style>
+<polygon class="st0" points="236.7,140.4 249.2,200.4 338.9,200.4 352.8,140.4 "/>
+<polyline class="st0" points="210.3,123.1 232.4,123.1 236.7,140.4 "/>
+<path class="st1" d="M382.1,80.8"/>
+<path class="st1" d="M417.2,251.7"/>
+<path class="st1" d="M427.7,197"/>
+<path class="st2" d="M341.7,220.8h-97.3H341.7z"/>
+<line class="st0" x1="251.8" y1="222" x2="337.9" y2="222"/>
+<path class="st0" d="M316.4,247.1c-11.9,0-21.5-8.7-21.5-19.5s7.3-5.6,19.2-5.6s23.8-5.2,23.8,5.6S328.3,247.1,316.4,247.1z"/>
+<path class="st0" d="M269.3,247.1c-11.9,0-21.5-8.7-21.5-19.5s9.7-6.9,21.5-5.6c12.7,1.5,22.5-3.4,21.5,5.6
+	C289.7,238.3,281.2,247.1,269.3,247.1z"/>
+<rect x="127.2" y="263" class="st3" width="4.8" height="1.2"/>
+<rect x="270.4" y="147.8" class="st4" width="41" height="18.6"/>
+<g>
+	<path class="st2" d="M341.7,99h-97.3H341.7z"/>
+	<path class="st0" d="M252,100.5h86H252z"/>
+	<path class="st0" d="M316.4,125.5c-11.9,0-21.5-8.7-21.5-19.5s7.3-5.6,19.2-5.6s23.8-5.2,23.8,5.6S328.3,125.5,316.4,125.5z"/>
+	<path class="st0" d="M269.3,125.5c-11.9,0-21.5-8.7-21.5-19.5s9.7-6.9,21.5-5.6c12.7,1.5,22.5-3.4,21.5,5.6
+		C289.7,116.7,281.2,125.5,269.3,125.5z"/>
+</g>
+<g>
+	<g>
+		<path class="st5" d="M283.1,172.5c0,2.9,2.2,5.8,6.1,5.8c2.8,0,5.6-1.2,7-3.3l1.2,1c-1.7,2.6-4.5,4.8-9.2,4.8
+			c-5,0-8.5-3.2-8.5-7.3c0-3.9,2.5-6.8,7.2-8.8l0.8,1.2C284,167.6,283.1,170.3,283.1,172.5z M285.6,165c-2-2.3-2.8-4.3-2.8-6.4
+			c0-3.5,2.8-5.6,6.5-5.6c3.9,0,6,2.1,6,5.1c0,3-2.1,5-6.9,7.5l-0.6-1.1c2.9-1.8,5-3.7,5-6.3c0-2.4-1.5-3.8-3.5-3.8
+			c-2,0-3.7,1.6-3.7,3.8c0,1.4,0.3,2.7,1.8,4.6c1.6,1.9,2.8,3.2,5.2,5.9c3.2,3.4,5.6,6,9.8,10.5l-2-0.9l5.2,0.6l-0.2,1.7
+			c-1.2,0.3-2,0.4-3,0.4c-2.1,0-3.3-0.5-4.6-1.8c-2.6-2.9-4.6-5.2-6.7-7.5C288.8,168.8,287.5,167.2,285.6,165z M300.9,164.4h1.8
+			c-1,4.6-2.8,8.2-5.2,11.5l-1.3-0.8C298.5,172,300,168.7,300.9,164.4z M301.4,165.4l-3.8-0.6v-1.6h8.1v1.6l-3.5,0.6H301.4z"/>
+	</g>
+</g>
+</svg>

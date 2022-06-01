@@ -1,8 +1,15 @@
-<div class="row" style="height: 15vh; font-size: 1.1rem;">
-    <mat-form-field class="my-auto" style="width: 70%;" appearance="outline">
-        <mat-label>Pesquisar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" #input>
-    </mat-form-field>
+<div class="row mt-5" style="height: 15vh; font-size: 1.1rem;">
+    <form [formGroup]="form">
+        <mat-form-field class="my-auto" style="width: 50%; margin-left: 15%;" appearance="outline">
+            <mat-label>Pesquisar</mat-label>
+            <input matInput (keydown.enter)="applySearch()" formControlName="filter">
+            <mat-icon matSuffix style="transform: scale(1.1);">search</mat-icon>
+        </mat-form-field>
 
-    <mat-icon class="my-auto mr-auto" style="margin-bottom: 7.7vh !important; font-size: 2.1rem;">search</mat-icon>
+        <mat-form-field style="width: 20%;" appearance="outline">
+            <mat-label>Localidade</mat-label>
+            <input matInput (keydown.enter)="applyLocation()" formControlName="location">
+            <mat-icon matSuffix style="transform: scale(1.1);">pin_drop</mat-icon>
+        </mat-form-field>
+    </form>
 </div>
