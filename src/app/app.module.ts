@@ -10,12 +10,18 @@ import { HomeComponent } from './home/home.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CreateAdComponent } from './create-ad/create-ad.component';
+import { ShowProductComponent } from './show-product/show-product.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatTableModule} from '@angular/material/table'
+import {MatSortModule} from '@angular/material/sort';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CreateAdComponent
+    CreateAdComponent,
+    ShowProductComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +31,11 @@ import { CreateAdComponent } from './create-ad/create-ad.component';
     MatToolbarModule,
     MatButtonModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatCardModule,
+    MatTableModule,
+    MatSortModule,
+    NgxGalleryModule
   ],
   providers: [],
   bootstrap: [AppComponent]
