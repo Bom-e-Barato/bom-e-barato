@@ -18,9 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
-
-
-
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +26,8 @@ import {MatDividerModule} from '@angular/material/divider';
     HomeComponent,
     CreateAdComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
