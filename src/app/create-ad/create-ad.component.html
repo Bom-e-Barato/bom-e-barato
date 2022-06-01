@@ -1,32 +1,67 @@
-<div class="row">
-    <div class="col-6">  
-        <input matInput id="Titulo" placeholder="Título">
-        <input matInput id="Preço" placeholder="Preço">
-        <mat-checkbox>Negociavel</mat-checkbox>
+<form [formGroup]="form" (submit)="submit()" >
 
-        <div class="row">
-            <mat-card>
-                <img src="assets/img/white-grafica.png" id="img" alt="">
-                <img src="assets/img/white-grafica.png" id="img" alt="">
-                <img src="assets/img/white-grafica.png" id="img" alt="">
-                <img src="assets/img/white-grafica.png" id="img" alt="">
-                <img src="assets/img/white-grafica.png" id="img" alt="">
-                <img src="assets/img/white-grafica.png" id="img" alt="">
+    <div class="row">
+        
+        <div class="col-6">
+            <div class="row">
+                <mat-form-field  appearance="outline">
+                    <input matInput id="Titulo" formControlName="titulo" placeholder="Título">
+                </mat-form-field> 
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline" style="width: 50%;">
+                    <input matInput id="Preço" formControlName="preço" placeholder="Preço">
+                </mat-form-field>
+                <mat-checkbox id="Negiciavel"  formControlName="negociavel">Negociavel</mat-checkbox>
+            </div>
+            
+            <div class="row">
+                <mat-card>
+                    <img src="assets/img/white-grafica.png" id="img" alt="">
+                    <img src="assets/img/white-grafica.png" id="img" alt="">
+                    <img src="assets/img/white-grafica.png" id="img" alt="">
+                    <img src="assets/img/white-grafica.png" id="img" alt="">
+                    <img src="assets/img/white-grafica.png" id="img" alt="">
+                    <img src="assets/img/white-grafica.png" id="img" alt="">
+                </mat-card>
+            </div>
+            
+            <div class="row">
+                <mat-form-field appearance="outline">
+                    <input matInput id="Localização" formControlName="local" placeholder="Localização">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="outline"> 
+                    <input matInput id="Categoria" formControlName="categoria" placeholder="Categoria">
+                </mat-form-field>
+            </div>
+                
+            <mat-checkbox  formControlName="promover">Promover</mat-checkbox>
+                
+            <div class="row mt-4 mb-1 mx-auto">
+                <button mat-raised-button color="accent" type="submit" mat-button>Criar</button>
+                <button mat-raised-button color="accent" (click)="clear()" mat-button>Cancelar</button>
+            </div>
+        
+            
+        </div>
+
+        <div class="col-4">
+            <!-- Descriçao do produto -->
+            <mat-card id="Descriçao">
+                <mat-card-title>
+                    <button mat-mini-fab color="primary">
+                        <mat-icon>edit</mat-icon> 
+                    </button>
+                Descrição
+                </mat-card-title>
+               
+                    <textarea matInput formControlName="descriçao" id="Texto" placeholder="Descrição"></textarea>
+                
+                
             </mat-card>
         </div>
-        <form>
-            ola
-        </form>
-        
-    </div>
-
-    <div class="col-4">
-        <!-- Descriçao do produto -->
-        <mat-card id="Descriçao">
-            <mat-card-title>Descrição</mat-card-title>
-            <mat-card-content>
-                <textarea matInput id="Descriçao_t" placeholder="Descrição"></textarea>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</div>
+    </div> 
+</form>

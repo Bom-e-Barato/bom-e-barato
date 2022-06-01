@@ -7,9 +7,18 @@
         </mat-form-field>
 
         <mat-form-field style="width: 20%;" appearance="outline">
-            <mat-label>Localidade</mat-label>
-            <input matInput (keydown.enter)="applyLocation()" formControlName="location">
+            <mat-label>Distrito</mat-label>                
+
+            <input type="text" matInput [matAutocomplete]="auto" (input)="onLocationInput()"
+                (keydown.enter)="applyLocation()" formControlName="location" >
             <mat-icon matSuffix style="transform: scale(1.1);">pin_drop</mat-icon>
+            <mat-error *ngIf="location?.invalid && !location?.hasError('required')">Distrito inválido</mat-error>
+            
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let district of filteredOptions | async" [value]="district">
+                    {{ district }}
+                </mat-option>
+            </mat-autocomplete>
         </mat-form-field>
     </form>
 </div>
