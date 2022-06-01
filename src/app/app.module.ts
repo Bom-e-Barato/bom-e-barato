@@ -15,10 +15,13 @@ import { RegisterComponent } from './register/register.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatCardModule} from '@angular/material/card';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SearchComponent } from './search/search.component';
+import { ProductComponent } from './product/product.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,9 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     CreateAdComponent,
     LoginComponent,
     RegisterComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    SearchComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +50,9 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     MatCheckboxModule,
     MatCardModule,
     MatDividerModule,
+    MatCardModule,
+    MatDividerModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
