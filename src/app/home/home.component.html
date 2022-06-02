@@ -5,9 +5,9 @@
 <div class="row">
     Destaques
 
-    <mat-grid-list cols="5" rowHeight="1:1.3">
+    <mat-grid-list cols="5" rowHeight="1:1.3" [gutterSize]="'10px'">
         <mat-grid-tile *ngFor="let prod of products">
-            <app-product [data]="prod"></app-product>
+            <app-product class="mx-auto" style="width: 90%" [data]="prod"></app-product>
         </mat-grid-tile>
     </mat-grid-list>
 </div>
