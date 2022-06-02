@@ -14,7 +14,7 @@ export class ProductComponent implements OnInit {
 
   constructor(private _router: Router, private _service: SharedService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {   
   }
   
   /* Open the page with the product details */

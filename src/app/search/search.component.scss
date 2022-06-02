@@ -3,6 +3,10 @@
     height: 20rem;
 }
 
+.filter-button {
+    margin-bottom: 10px;
+}
+
 .example-radio-group {
     display: flex;
     flex-direction: column;
@@ -15,9 +19,10 @@
 }
 
 #min-max-field {
-    width: 100px !important;
+    width: 80px !important;
 }
 
 ul {
     list-style-type: none;
 }
+

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { Subscription } from 'rxjs';
-import { SharedService } from '../shared.service';
 import { FormBuilder, FormGroup} from '@angular/forms';
+import { Product, SharedService } from '../shared.service';
 
 export interface Task {
   name: string;
@@ -28,9 +28,11 @@ export class SearchComponent implements OnInit {
   //vendedores
   sellers : FormGroup;
 
+  products: Product[] = [];
+
   constructor(private _service: SharedService, fb:FormBuilder) {
      this.subscription = this._service.filter.subscribe((data: string) => {
-      this.filterValue = data;
+      this.filterValue = data;      
       
       // this._service.dummyAPI().subscribe((data: any) => {
       //   this.loading = false;
@@ -50,6 +52,13 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.products = this._service.getProducts();   
+  }
+  
+  filter() {
+    console.log(this.chosen_price_range);
+    console.log(this.sellers.value);
+    
   }
 
 

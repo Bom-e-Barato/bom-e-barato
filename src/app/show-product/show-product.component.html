@@ -66,7 +66,11 @@
                 <br>
                 <br>   
                 <b>Location: </b> {{product.location}}                
-                <br>   
+                <br>
+                <br>
+                <div *ngIf="product.negotiable">
+                    <p><b>Negotiable</b></p>
+                </div>
             </mat-card-content>
             <button mat-stroked-button color="primary" class="cont_btn">
                 Contactar
