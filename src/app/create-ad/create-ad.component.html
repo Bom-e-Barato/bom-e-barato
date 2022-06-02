@@ -5,13 +5,19 @@
         <div class="col-6">
             <div class="row">
                 <mat-form-field  appearance="outline">
-                    <input matInput id="Titulo" formControlName="titulo" placeholder="Título">
+                    <mat-label>Título</mat-label> 
+                    <input matInput style="width:100%" formControlName="titulo" placeholder="Título">
+                    <mat-error *ngIf="titulo?.hasError('required')">Preencha um titulo</mat-error>
+
                 </mat-form-field> 
             </div>
 
             <div class="row">
                 <mat-form-field appearance="outline" style="width: 50%;">
-                    <input matInput id="Preço" formControlName="preço" placeholder="Preço">
+                    <mat-label>Preço(€)</mat-label> 
+                    <input matInput style="width: 25%;" formControlName="preço" placeholder="Preço(€)">
+                    <mat-error *ngIf="preco?.invalid && !preco?.hasError('required')">Preço inválido</mat-error>
+
                 </mat-form-field>
                 <mat-checkbox id="Negiciavel"  formControlName="negociavel">Negociavel</mat-checkbox>
             </div>
@@ -29,13 +35,39 @@
             
             <div class="row">
                 <mat-form-field appearance="outline">
-                    <input matInput id="Localização" formControlName="local" placeholder="Localização">
+                    <!-- <textarea matInput style="width:100%" formControlName="descricao" placeholder="Descrição"></textarea> -->
+                <mat-label>Distrito</mat-label>                
+
+                <input type="text" matInput [matAutocomplete]="auto" (input)="onLocationInput()"
+                    (keydown.enter)="applyLocation()" formControlName="local" >
+                <mat-icon matSuffix style="transform: scale(1.1);">pin_drop</mat-icon>
+                <mat-error *ngIf="local?.invalid && !local?.hasError('required')">Distrito inválido</mat-error>
+                
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let district of filteredOptions | async" [value]="district">
+                            {{ district }}
+                        </mat-option>
+                    </mat-autocomplete>
                 </mat-form-field>
             </div>
             <div class="row">
-                <mat-form-field appearance="outline"> 
-                    <input matInput id="Categoria" formControlName="categoria" placeholder="Categoria">
+
+                <mat-form-field appearance="outline">
+                    <!-- <textarea matInput style="width:100%" formControlName="descricao" placeholder="Descrição"></textarea> -->
+                    <mat-label>Categoria</mat-label>                
+
+                    <input type="text" matInput [matAutocomplete]="auto2" (input)="onCategoryInput()"
+                        (keydown.enter)="applyCategory()" formControlName="categoria" >
+                    <mat-icon matSuffix style="transform: scale(1.1);">category</mat-icon>
+                    <mat-error *ngIf="categoria?.invalid && !categoria?.hasError('required')">Categoria inválida</mat-error>
+                    
+                        <mat-autocomplete #auto2="matAutocomplete">
+                            <mat-option *ngFor="let categoria of filteredOptions2 | async" [value]="categoria">
+                                {{ categoria }}
+                            </mat-option>
+                        </mat-autocomplete>
                 </mat-form-field>
+
             </div>
                 
             <mat-checkbox  formControlName="promover">Promover</mat-checkbox>
@@ -55,12 +87,9 @@
                     <button mat-mini-fab color="primary">
                         <mat-icon>edit</mat-icon> 
                     </button>
-                Descrição
+                    Descrição
                 </mat-card-title>
-               
                     <textarea matInput formControlName="descriçao" id="Texto" placeholder="Descrição"></textarea>
-                
-                
             </mat-card>
         </div>
     </div> 
