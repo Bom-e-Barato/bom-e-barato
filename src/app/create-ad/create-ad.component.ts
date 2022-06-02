@@ -22,7 +22,7 @@ export class CreateAdComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this._formbuilder.group({
-      local: new FormControl('', [Validators.required]),
+      local: new FormControl('', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]),
       preço: new FormControl('', [Validators.required,Validators.min(0),Validators.pattern('^[0-9,]*$')]),
       titulo: new FormControl('', [Validators.required],),
       imagem: new FormControl('', [Validators.required]),

@@ -40,8 +40,9 @@
 
                 <input type="text" matInput [matAutocomplete]="auto" (input)="onLocationInput()"
                     (keydown.enter)="applyLocation()" formControlName="local" >
-                <mat-icon matSuffix style="transform: scale(1.1);">pin_drop</mat-icon>
-                <mat-error *ngIf="local?.invalid && !local?.hasError('required')">Distrito inválido</mat-error>
+                    <mat-icon matSuffix style="transform: scale(1.1);">pin_drop</mat-icon>
+                    <mat-error *ngIf="local?.hasError('required')">Escolha um Distrito</mat-error>
+                    <mat-error *ngIf="local?.invalid && !local?.hasError('required')">Distrito inválido</mat-error>
                 
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let district of filteredOptions | async" [value]="district">
@@ -59,6 +60,7 @@
                     <input type="text" matInput [matAutocomplete]="auto2" (input)="onCategoryInput()"
                         (keydown.enter)="applyCategory()" formControlName="categoria" >
                         <mat-icon matSuffix style="transform: scale(1.1);">category</mat-icon>
+                        <mat-error *ngIf="categoria?.hasError('required')">Defina uma Categoria</mat-error>
                         <mat-error *ngIf="categoria?.invalid && !categoria?.hasError('required')">Categoria inválida</mat-error>
                     
                         <mat-autocomplete #auto2="matAutocomplete">
