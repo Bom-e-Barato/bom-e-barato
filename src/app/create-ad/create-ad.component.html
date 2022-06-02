@@ -16,10 +16,10 @@
                 <mat-form-field appearance="outline" style="width: 50%;">
                     <mat-label>Preço(€)</mat-label> 
                     <input matInput style="width: 25%;" formControlName="preço" placeholder="Preço(€)">
+                    <mat-error *ngIf="preco?.hasError('required')">Defina um preço</mat-error>
                     <mat-error *ngIf="preco?.invalid && !preco?.hasError('required')">Preço inválido</mat-error>
-
                 </mat-form-field>
-                <mat-checkbox id="Negiciavel"  formControlName="negociavel">Negociavel</mat-checkbox>
+                <mat-checkbox id="Negiciavel" formControlName="negociavel">Negociavel</mat-checkbox>
             </div>
             
             <div class="row">
@@ -58,8 +58,8 @@
 
                     <input type="text" matInput [matAutocomplete]="auto2" (input)="onCategoryInput()"
                         (keydown.enter)="applyCategory()" formControlName="categoria" >
-                    <mat-icon matSuffix style="transform: scale(1.1);">category</mat-icon>
-                    <mat-error *ngIf="categoria?.invalid && !categoria?.hasError('required')">Categoria inválida</mat-error>
+                        <mat-icon matSuffix style="transform: scale(1.1);">category</mat-icon>
+                        <mat-error *ngIf="categoria?.invalid && !categoria?.hasError('required')">Categoria inválida</mat-error>
                     
                         <mat-autocomplete #auto2="matAutocomplete">
                             <mat-option *ngFor="let categoria of filteredOptions2 | async" [value]="categoria">
