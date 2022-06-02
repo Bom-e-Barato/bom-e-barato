@@ -9,8 +9,7 @@
         <mat-form-field style="width: 20%;" appearance="outline">
             <mat-label>Distrito</mat-label>                
 
-            <input type="text" matInput [matAutocomplete]="auto" (input)="onLocationInput()"
-                (keydown.enter)="applyLocation()" formControlName="location" >
+            <input type="text" matInput [matAutocomplete]="auto" (input)="onLocationInput()" formControlName="location">
             <mat-icon matSuffix style="transform: scale(1.1);">pin_drop</mat-icon>
             <mat-error *ngIf="location?.invalid && !location?.hasError('required')">Distrito inválido</mat-error>
             

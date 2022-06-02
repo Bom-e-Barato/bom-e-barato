@@ -19,6 +19,7 @@ export interface Task {
 export class SearchComponent implements OnInit {
   loading: boolean = true;
   filterValue: string = '';
+  locationValue: string = '';
   subscription: Subscription = new Subscription();
   
   //preço
@@ -31,8 +32,12 @@ export class SearchComponent implements OnInit {
   products: Product[] = [];
 
   constructor(private _service: SharedService, fb:FormBuilder) {
-     this.subscription = this._service.filter.subscribe((data: string) => {
-      this.filterValue = data;      
+    this.subscription = this._service.filter.subscribe((data: any) => {
+      console.log(data);
+
+      this.loading = true;
+      this.filterValue = data.filter;
+      this.locationValue = data.location;
       
       // this._service.dummyAPI().subscribe((data: any) => {
       //   this.loading = false;
@@ -57,9 +62,6 @@ export class SearchComponent implements OnInit {
   
   filter() {
     console.log(this.chosen_price_range);
-    console.log(this.sellers.value);
-    
+    console.log(this.sellers.value); 
   }
-
-
 }

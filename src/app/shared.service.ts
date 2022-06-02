@@ -20,8 +20,11 @@ export interface Product {
   providedIn: 'root'
 })
 export class SharedService {
-  /* Initialize the cart_details information */
-  private filterSource = new BehaviorSubject<any>(localStorage.getItem('filter') ? localStorage.getItem('filter') : '');
+  
+  /* Initialize the filter information */
+  private filterSource = new BehaviorSubject<any>(
+    localStorage.getItem('filter')!
+  );
   filter = this.filterSource.asObservable();
 
   readonly API = 'http://127.0.0.1:8000/exercise/api';
@@ -29,9 +32,21 @@ export class SharedService {
   constructor(private _http: HttpClient) { }
 
   /* Change the filter value */
-  setFilter(filter: string) {
-    this.filterSource.next(filter);
-    localStorage.setItem('filter', filter);
+  setFilter(filter: string, location: string) {
+    if (this.filterSource.value.filter !== filter) {
+      if (this.filterSource.value.location !== location) {
+        this.filterSource.next({filter: filter, location: location});
+        localStorage.setItem('filter', JSON.stringify({filter: filter, location: location}));
+      } else {
+        this.filterSource.next({filter: filter, location: this.filterSource.value.location});
+        localStorage.setItem('filter', JSON.stringify({filter: filter, location: this.filterSource.value.location}));
+      }
+    } else {
+      if (this.filterSource.value.location !== location && this.filterSource.value.filter.length > 0) {
+        this.filterSource.next({filter: this.filterSource.value.filter, location: location});
+        localStorage.setItem('filter', JSON.stringify({filter: this.filterSource.value.filter, location: location}));
+      }
+    }
   }
 
   dummyAPI() {
