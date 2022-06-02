@@ -30,6 +30,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import {MatRadioModule} from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatProgressSpinnerModule,
     HttpClientModule,
     MatRadioModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatChipsModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
