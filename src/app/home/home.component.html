@@ -7,14 +7,14 @@
         <div class="row mt-2">
             <mat-grid-list class="mx-auto mt-0" cols="5" rowHeight="3:1" style="width: 80vw;">
                 <mat-grid-tile *ngFor="let category of categories">
-                    <app-category [data]="category"></app-category>
+                    <app-category (click)="selectCategory(category.name)" [data]="category"></app-category>
                 </mat-grid-tile>
             </mat-grid-list>
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row mb-4">
     <div class="col w-80">
         <div class="row mb-2">
             <h1>Destaques</h1>
@@ -22,7 +22,7 @@
 
         <div class="row mt-2">
             <mat-grid-list cols="5" rowHeight="1:1.3" [gutterSize]="'10px'">
-                <mat-grid-tile *ngFor="let prod of products">
+                <mat-grid-tile *ngFor="let prod of promoted">
                     <app-product class="mx-auto" style="width: 90%" [data]="prod"></app-product>
                 </mat-grid-tile>
             </mat-grid-list>

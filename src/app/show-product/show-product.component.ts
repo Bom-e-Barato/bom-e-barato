@@ -5,14 +5,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import {NgxGalleryComponent, NgxGalleryOptions} from '@kolkov/ngx-gallery';
 import {NgxGalleryImage} from '@kolkov/ngx-gallery';
 import {NgxGalleryAnimation} from '@kolkov/ngx-gallery';
-import { Product, SharedService } from '../shared.service';
+import { product, SharedService } from '../shared.service';
 import {MatPaginator} from '@angular/material/paginator';
 
-const ELEMENT_DATA: Product[] = [
-  {marketplace: "OLX", name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6", price:749, link:"https://olx.pt", img:"", description:"", promoted:false, negotiable:false, category:[], location:""},  
-  {marketplace: "CustoJusto", name: "Asus ROG Strix RTX 1070 Ti V2 8GB GDDR5", price:560, link:"https://custojusto.pt", img:"", description:"", promoted:false, negotiable:false, category:[], location:""},
-  {marketplace: "eBay", name: "Asus ROG Strix RTX 3060 Ti V2 6GB GDDR6", price:500, link:"https://ebay.com", img:"", description:"", promoted:false, negotiable:false, category:[], location:""},
-  {marketplace: "Amazon", name: "Gigabyte GeForce RTX 3060 Ti VISION OC LHR 8GB GDDR6", price:770, link:"https://amazon.com", img:"", description:"", promoted:false, negotiable:false, category:[], location:""},
+const ELEMENT_DATA: product[] = [
+  {marketplace: "OLX", name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6", price:749, link:"https://olx.pt", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},  
+  {marketplace: "CustoJusto", name: "Asus ROG Strix RTX 1070 Ti V2 8GB GDDR5", price:560, link:"https://custojusto.pt", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},
+  {marketplace: "eBay", name: "Asus ROG Strix RTX 3060 Ti V2 6GB GDDR6", price:500, link:"https://ebay.com", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},
+  {marketplace: "Amazon", name: "Gigabyte GeForce RTX 3060 Ti VISION OC LHR 8GB GDDR6", price:770, link:"https://amazon.com", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},
 ];
 
 @Component({
@@ -32,11 +32,11 @@ export class ShowProductComponent implements OnInit {
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private _service: SharedService) { }
 
-  products: Product[] = [];
-  product!: Product;
+  products: product[] = [];
+  product!: product;
 
   ngOnInit(): void {
-    this.products = this._service.getProducts();
+    this.products = this._service.getPromotedProducts();
 
     // REMOVE THIS AFTER
     this.product = this.products[0];

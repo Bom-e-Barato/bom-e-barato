@@ -6,13 +6,14 @@
     <div *ngIf="!loading">
         Pesquisar: {{filterValue}}
 
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-2">
                 <div class="row">
                     <button class="filter-button" mat-raised-button color="primary" (click)="filter()">
                         Filter
                     </button>
                 </div>
+
                 <div class="row mb-3">
                     <mat-card class="filter-card mat-elevation-z2">
                         <h1>Preço</h1>
@@ -45,16 +46,33 @@
                         </form>
                     </mat-card>
                 </div>
+
+                <div class="row mb-3">
+                    <mat-card class="filter-card mat-elevation-z2">
+                        <h1>Categorias</h1>
+                        <section class="example-section" [formGroup]="categories">
+                            <p><mat-checkbox formControlName="automoveis">Automóveis</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="ferramentas">Ferramentas</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="roupa">Roupa</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="imoveis">Imóveis</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="eletrodomesticos">Eletrodomésticos</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="desporto">Desport</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="tecnologia">Tecnologia</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="lazer">Lazer</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="moveis">Móveis</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="outros">Outros</mat-checkbox></p>
+                        </section>
+                    </mat-card>
+                </div>
     
                 <div class="row">
                     <mat-card class="filter-card mat-elevation-z2"  >
                         <h1>Vendedores</h1>
                         <section class="example-section" [formGroup]="sellers">
-                            <h4>Select your toppings:</h4>
+                            <p><mat-checkbox formControlName="olx">OLX</mat-checkbox></p>
                             <p><mat-checkbox formControlName="custojusto">Custo Justo</mat-checkbox></p>
                             <p><mat-checkbox formControlName="ebay">eBay</mat-checkbox></p>
-                            <p><mat-checkbox formControlName="olx">OLX</mat-checkbox></p>
-                            <p><mat-checkbox formControlName="amazon">Amazon</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="kuantokusta">Kuantokusta</mat-checkbox></p>
                         </section>
                     </mat-card>
                 </div>
@@ -70,4 +88,3 @@
         </div>
     </div>
 </div>
-

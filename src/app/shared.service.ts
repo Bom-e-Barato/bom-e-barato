@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-export interface Product {
+export interface product {
   marketplace: string;
   name: string;
   price: number;
@@ -12,7 +12,7 @@ export interface Product {
   promoted: boolean;
   negotiable: boolean;
   id_seller?: number;
-  category?: string[];
+  category?: string;
   location?: string;
 }
 
@@ -24,7 +24,94 @@ export class SharedService {
   private filterSource = new BehaviorSubject<any>(localStorage.getItem('filter') ? JSON.parse(localStorage.getItem('filter')!) : {filter: '', location: ''});
   filter = this.filterSource.asObservable();
 
+  /* Initialize the category information */
+  private categorySource = new BehaviorSubject<string>(localStorage.getItem('category') ? localStorage.getItem('category')! : '');
+  category = this.categorySource.asObservable();
+
   readonly API = 'http://127.0.0.1:8000/exercise/api';
+
+  products : product[] = [
+    {
+      marketplace: "OLX",
+      name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6",
+      price: 775,
+      link: "https://www.google.com",
+      img: "nvidia-card.jpg",
+      description: "",
+      promoted: false,
+      negotiable: false
+    },
+    {
+      marketplace: "OLX",
+      name: "Zotac RTX 3060 Ti 8GB GDDR6",
+      price: 650,
+      link: "htts://www.google.com",
+      img: "nvidia-card.jpg",
+      description: "",
+      promoted: false,
+      negotiable: false
+    },
+    {
+      marketplace: "Bom e Barato",
+      name: "MSI RTX 3060 Ti 8GB GDDR6",
+      price: 800,
+      link: "",
+      img: "nvidia-card.jpg",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      promoted: false,
+      negotiable: false,
+      category: 'Tecnologia',
+      location: 'Aveiro'
+    },
+    {
+      marketplace: "Bom e Barato",
+      name: "MSI RTX 3060 6GB",
+      price: 580,
+      link: "",
+      img: "nvidia-card.jpg",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      promoted: false,
+      negotiable: true,
+      category: 'Tecnologia',
+      location: 'Braga'
+    },
+    {
+      marketplace: "Bom e Barato",
+      name: "AMD RX6900 XT",
+      price: 700,
+      link: "",
+      img: "nvidia-card.jpg",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      promoted: true,
+      negotiable: false,
+      category: 'Tecnologia',
+      location: 'Bragança'
+    },
+    {
+      marketplace: "Bom e Barato",
+      name: "Bola 2022",
+      price: 25,
+      link: "",
+      img: "nvidia-card.jpg",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      promoted: false,
+      negotiable: true,
+      category: "Desporto",
+      location: "Aveiro"
+    },
+    {
+      marketplace: "Bom e Barato",
+      name: "Futebol bola 2020",
+      price: 18,
+      link: "",
+      img: "nvidia-card.jpg",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      promoted: true,
+      negotiable: true,
+      category: "Desporto",
+      location: "Leiria"
+    }
+  ];
 
   constructor(private _http: HttpClient) { }
 
@@ -46,6 +133,12 @@ export class SharedService {
     }
   }
 
+  /* Change the category value */
+  setCategory(category: string) {
+    this.categorySource.next(category);
+    localStorage.setItem('category', category);
+  }
+
   dummyAPI() {
     return this._http.get(this.API + '/exercises');
   }
@@ -59,82 +152,12 @@ export class SharedService {
           ];
   }
 
-  /* Get products */
-  getProducts() {
-    var products : Product[] = [
-      {
-        marketplace: "OLX",
-        name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6",
-        price:775,
-        link:"https://www.google.com",
-        img:"nvidia-card.jpg",
-        description:"Motor Gráfico: NVIDIA® GeForce® RTX 3060 Ti\n Bus: PCI Express 4.0 16x \nClore Clock: Base: 1410 MHz, Boost: 1890 MHz\n Clock de Memória: 14 Gbps\n Núcleos CUDA: 4864\n Memória: 8GB GDDR6 \nInterface de Memória: 256 Bits\n Interface 1/0: 3 x DisplayPort 1.4 2 x HDMI 2.1 Suporte HDCP 2.3\n Versão DirectX: 12 \nVersão OpenGL: 4.6 \nDimensões do produto: 31.85 x 14.01 x 5.78 cm",
-        promoted:false,
-        negotiable:false,
-        category:["Placas de Gráficas", "Componentes Informática", "Informática"],
-        location:"Aveiro"
-      },
-      {
-        marketplace: "OLX",
-        name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6",
-        price:775,
-        link:"https://www.google.com",
-        img:"nvidia-card.jpg",
-        description:"Motor Gráfico: NVIDIA® GeForce® RTX 3060 Ti\n Bus: PCI Express 4.0 16x \nClore Clock: Base: 1410 MHz, Boost: 1890 MHz\n Clock de Memória: 14 Gbps\n Núcleos CUDA: 4864\n Memória: 8GB GDDR6 \nInterface de Memória: 256 Bits\n Interface 1/0: 3 x DisplayPort 1.4 2 x HDMI 2.1 Suporte HDCP 2.3\n Versão DirectX: 12 \nVersão OpenGL: 4.6 \nDimensões do produto: 31.85 x 14.01 x 5.78 cm",
-        promoted:false,
-        negotiable:false,
-        category:["Placas de Gráficas", "Componentes Informática", "Informática"],
-        location:"Aveiro"
-      },
-      {
-        marketplace: "OLX",
-        name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6",
-        price:775,
-        link:"https://www.google.com",
-        img:"nvidia-card.jpg",
-        description:"Motor Gráfico: NVIDIA® GeForce® RTX 3060 Ti\n Bus: PCI Express 4.0 16x \nClore Clock: Base: 1410 MHz, Boost: 1890 MHz\n Clock de Memória: 14 Gbps\n Núcleos CUDA: 4864\n Memória: 8GB GDDR6 \nInterface de Memória: 256 Bits\n Interface 1/0: 3 x DisplayPort 1.4 2 x HDMI 2.1 Suporte HDCP 2.3\n Versão DirectX: 12 \nVersão OpenGL: 4.6 \nDimensões do produto: 31.85 x 14.01 x 5.78 cm",
-        promoted:false,
-        negotiable:false,
-        category:["Placas de Gráficas", "Componentes Informática", "Informática"],
-        location:"Aveiro"
-      },
-      {
-        marketplace: "OLX",
-        name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6",
-        price:775,
-        link:"https://www.google.com",
-        img:"nvidia-card.jpg",
-        description:"Motor Gráfico: NVIDIA® GeForce® RTX 3060 Ti\n Bus: PCI Express 4.0 16x \nClore Clock: Base: 1410 MHz, Boost: 1890 MHz\n Clock de Memória: 14 Gbps\n Núcleos CUDA: 4864\n Memória: 8GB GDDR6 \nInterface de Memória: 256 Bits\n Interface 1/0: 3 x DisplayPort 1.4 2 x HDMI 2.1 Suporte HDCP 2.3\n Versão DirectX: 12 \nVersão OpenGL: 4.6 \nDimensões do produto: 31.85 x 14.01 x 5.78 cm",
-        promoted:false,
-        negotiable:false,
-        category:["Placas de Gráficas", "Componentes Informática", "Informática"],
-        location:"Aveiro"
-      },
-      {
-        marketplace: "OLX",
-        name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6",
-        price:775,
-        link:"https://www.google.com",
-        img:"nvidia-card.jpg",
-        description:"Motor Gráfico: NVIDIA® GeForce® RTX 3060 Ti\n Bus: PCI Express 4.0 16x \nClore Clock: Base: 1410 MHz, Boost: 1890 MHz\n Clock de Memória: 14 Gbps\n Núcleos CUDA: 4864\n Memória: 8GB GDDR6 \nInterface de Memória: 256 Bits\n Interface 1/0: 3 x DisplayPort 1.4 2 x HDMI 2.1 Suporte HDCP 2.3\n Versão DirectX: 12 \nVersão OpenGL: 4.6 \nDimensões do produto: 31.85 x 14.01 x 5.78 cm",
-        promoted:false,
-        negotiable:false,
-        category:["Placas de Gráficas", "Componentes Informática", "Informática"],
-        location:"Aveiro"
-      },
-      {
-        marketplace: "OLX",
-        name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6",
-        price:775,
-        link:"https://www.google.com",
-        img:"nvidia-card.jpg",
-        description:"Motor Gráfico: NVIDIA® GeForce® RTX 3060 Ti\n Bus: PCI Express 4.0 16x \nClore Clock: Base: 1410 MHz, Boost: 1890 MHz\n Clock de Memória: 14 Gbps\n Núcleos CUDA: 4864\n Memória: 8GB GDDR6 \nInterface de Memória: 256 Bits\n Interface 1/0: 3 x DisplayPort 1.4 2 x HDMI 2.1 Suporte HDCP 2.3\n Versão DirectX: 12 \nVersão OpenGL: 4.6 \nDimensões do produto: 31.85 x 14.01 x 5.78 cm",
-        promoted:false,
-        negotiable:false,
-        category:["Placas de Gráficas", "Componentes Informática", "Informática"],
-        location:"Aveiro"
-      }
-    ];
-    return products;
+  /* Get all the products */
+  getPromotedProducts() {
+    return this.products.filter((p: product) => p.promoted == true);
+  }
+
+  getProducts(filter: string, location: string) {
+    return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
   }
 }
