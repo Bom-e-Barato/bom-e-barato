@@ -32,6 +32,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     RegisterComponent,
     SearchBarComponent,
     SearchComponent,
-    ProductComponent
+    ProductComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,

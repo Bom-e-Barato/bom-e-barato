@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators,  ValidationErrors, ValidatorFn, AbstractControl, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { SharedService } from '../shared.service';
-import  {map, startWith } from 'rxjs/operators';
-//import router
+import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
@@ -41,13 +39,11 @@ export class CreateAdComponent implements OnInit {
       startWith(''),
       map(value => this._filter2(value)),
     );
-  
   }
 
-  submit(){
+  submit() {
     console.log(this.form.value);
     this._router.navigate(['/home']);
-
   }
 
   get local() { return this.form.get('local') };
@@ -119,7 +115,7 @@ export const locationValidator: ValidatorFn = (formGroup: AbstractControl ): Val
 }
 
 export const categoryValidator: ValidatorFn = (formGroup: AbstractControl ): ValidationErrors | null  => {
-  var categories:string[] = ['Automóveis','Ferramentas','Roupa','Imoveis', 'Eletrodomésticos', 'Eletrônicos', 'Desporto', 'Informática', 'Moda', 'Móveis', 'Outros'];
+  var categories: string[] = ['Automóveis', 'Ferramentas', 'Roupa', 'Imóveis', 'Eletrodomésticos', 'Desporto', 'Tecnologia', 'Lazer', 'Móveis', 'Outros'];
 
   var input: string = formGroup.get('categoria')?.value?.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
   if (input == '') return null;

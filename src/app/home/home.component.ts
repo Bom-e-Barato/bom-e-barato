@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-home',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  // categories: {name: string, icon: string}[];
+  categories: any[];
+
   products = [
     {
       title: 'Product 1',
@@ -33,7 +37,9 @@ export class HomeComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private _service: SharedService) {
+    this.categories = this._service.getCategories();
+  }
 
   ngOnInit(): void {
   }

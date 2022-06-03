@@ -20,11 +20,8 @@ export interface Product {
   providedIn: 'root'
 })
 export class SharedService {
-  
   /* Initialize the filter information */
-  private filterSource = new BehaviorSubject<any>(
-    localStorage.getItem('filter')!
-  );
+  private filterSource = new BehaviorSubject<any>(localStorage.getItem('filter') ? JSON.parse(localStorage.getItem('filter')!) : {filter: '', location: ''});
   filter = this.filterSource.asObservable();
 
   readonly API = 'http://127.0.0.1:8000/exercise/api';
@@ -51,6 +48,15 @@ export class SharedService {
 
   dummyAPI() {
     return this._http.get(this.API + '/exercises');
+  }
+
+  getCategories() {
+    return [{ name: 'Automóveis', icon: 'directions_car' }, { name: 'Ferramentas', icon: 'construction' },
+            { name: 'Roupa', icon: 'checkroom' }, { name: 'Imóveis', icon: 'home' },
+            { name: 'Eletrodomésticos', icon: 'microwave_gen' }, { name: 'Desporto', icon: 'sports_soccer' },
+            { name: 'Tecnologia', icon: 'devices' }, { name: 'Lazer', icon: 'sports_esports'},
+            { name: 'Móveis', icon: 'bed' }, { name: 'Outros', icon: 'handshake' }
+          ];
   }
 
   /* Get products */
@@ -131,5 +137,4 @@ export class SharedService {
     ];
     return products;
   }
-
 }

@@ -20,6 +20,5 @@ export class ProductComponent implements OnInit {
   /* Open the page with the product details */
   open_product() {
     this._router.navigate(['/product']);
-    
   }
 }
