@@ -18,28 +18,29 @@
                     <mat-card class="filter-card mat-elevation-z2">
                         <h1>Preço</h1>
                         <mat-radio-group
-                        aria-labelledby="example-radio-group-label"
-                        class="example-radio-group"
-                        [(ngModel)]="chosen_price_range">
+                            aria-labelledby="example-radio-group-label"
+                            class="example-radio-group"
+                            [(ngModel)]="chosen_price_range">
                             <mat-radio-button class="example-radio-button" *ngFor="let price of price_ranges" [value]="price">
                                 {{price}}
                             </mat-radio-button>
                         </mat-radio-group>
-                        <form class="example-form">
+
+                        <form [formGroup]="priceRange">
                             <div class="row"> 
-                                <div class="col-3">
+                                <div class="col">
                                     <mat-form-field id="min-max-field" appearance="fill">
-                                        <input type="text" matInput placeholder="Min.">
-                                        <span matSufix>€ &nbsp;</span>
+                                        <input type="text" matInput (input)="onPriceInput()" formControlName="min" placeholder="Min.">
+                                        <span matSuffix>€ &nbsp;</span>
+                                        <mat-error *ngIf="min?.invalid && !min?.hasError('required')">Preço inválido</mat-error>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-1">
-                                    <span></span>
-                                </div>
-                                <div class="col-3">
+
+                                <div class="col">
                                     <mat-form-field id="min-max-field" appearance="fill">
-                                        <input type="text" matInput placeholder="Máx.">
-                                        <span matSufix>€ &nbsp;</span>
+                                        <input type="text" matInput (input)="onPriceInput()" formControlName="max" placeholder="Máx.">
+                                        <span matSuffix>€ &nbsp;</span>
+                                        <mat-error *ngIf="max?.invalid && !max?.hasError('required')">Preço inválido</mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -50,7 +51,7 @@
                 <div class="row mb-3">
                     <mat-card class="filter-card mat-elevation-z2">
                         <h1>Categorias</h1>
-                        <section class="example-section" [formGroup]="categories">
+                        <section [formGroup]="categories">
                             <p><mat-checkbox formControlName="automoveis">Automóveis</mat-checkbox></p>
                             <p><mat-checkbox formControlName="ferramentas">Ferramentas</mat-checkbox></p>
                             <p><mat-checkbox formControlName="roupa">Roupa</mat-checkbox></p>
@@ -68,7 +69,8 @@
                 <div class="row">
                     <mat-card class="filter-card mat-elevation-z2"  >
                         <h1>Vendedores</h1>
-                        <section class="example-section" [formGroup]="sellers">
+                        <section [formGroup]="sellers">
+                            <p><mat-checkbox formControlName="bomebarato">Bom e Barato</mat-checkbox></p>
                             <p><mat-checkbox formControlName="olx">OLX</mat-checkbox></p>
                             <p><mat-checkbox formControlName="custojusto">Custo Justo</mat-checkbox></p>
                             <p><mat-checkbox formControlName="ebay">eBay</mat-checkbox></p>
