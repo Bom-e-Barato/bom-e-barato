@@ -1,0 +1,69 @@
+  <mat-grid-list cols="2" rowHeight="150%" >
+  <mat-grid-tile >
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+    
+      <!-- Position Column -->
+      
+    
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+    
+      
+      <!-- Message Column -->
+      <ng-container matColumnDef="message">
+        <th mat-header-cell *matHeaderCellDef>  </th>
+        <td mat-cell *matCellDef="let element"> {{element.message}} </td>
+      </ng-container>
+    
+    
+      <!-- Date Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-grid-tile>
+
+
+  <mat-grid-tile>
+    <mat-card class="card">
+
+
+      <ng-container >
+        
+        <div class="row" *ngFor="let m of messages">
+            <div class="col">
+                <p *ngIf="m.id==0">{{m.text}}</p>
+            </div>
+            <div class="col">
+                <p *ngIf="m.id==1">{{m.text}}</p>
+            </div>
+        </div>
+     
+
+      </ng-container>
+
+
+
+      
+      <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Your message</mat-label>
+        <textarea matInput placeholder="Hello..."></textarea>
+      </mat-form-field>
+      <button mat-button class='button' color="primary">Enviar</button>
+      </form>
+
+    </mat-card>
+  </mat-grid-tile>
+  </mat-grid-list>

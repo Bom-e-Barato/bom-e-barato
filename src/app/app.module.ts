@@ -30,6 +30,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import {MatRadioModule} from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ChatComponent } from './chat/chat.component';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     RegisterComponent,
     SearchBarComponent,
     SearchComponent,
-    ProductComponent
+    ProductComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
