@@ -4,55 +4,99 @@
     </div>
 
     <div *ngIf="!loading">
-        Pesquisar: {{filterValue}}
-    </div>
-    
-    <div class="row">
-        <div class="col">
-            <mat-card class="filter-card">
-                <h1>Preço</h1>
-                <mat-radio-group
-                aria-labelledby="example-radio-group-label"
-                class="example-radio-group"
-                [(ngModel)]="chosen_price_range">
-                    <mat-radio-button class="example-radio-button" *ngFor="let price of price_ranges" [value]="price">
-                        {{price}}
-                    </mat-radio-button>
-                </mat-radio-group>
-                <form class="example-form">
-                    <div class="row"> 
-                        <div class="col-3">
-                            <mat-form-field id="min-max-field" appearance="fill">
-                                <input type="text" matInput placeholder="Min.">
-                                <span matSufix>€ &nbsp;</span>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-1">
-                            <span></span>
-                        </div>
-                        <div class="col-3">
-                            <mat-form-field id="min-max-field" appearance="fill">
-                                <input type="text" matInput placeholder="Máx.">
-                                <span matSufix>€ &nbsp;</span>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </form>
-            </mat-card>
-            <mat-card class="filter-card">
-                <h1>Vendedores</h1>
-                <section class="example-section" [formGroup]="sellers">
-                    <h4>Select your toppings:</h4>
-                    <p><mat-checkbox formControlName="custojusto">Custo Justo</mat-checkbox></p>
-                    <p><mat-checkbox formControlName="ebay">eBay</mat-checkbox></p>
-                    <p><mat-checkbox formControlName="olx">OLX</mat-checkbox></p>
-                    <p><mat-checkbox formControlName="amazon">Amazon</mat-checkbox></p>
-                </section>
-            </mat-card>
+        <div class="row align-items-center">
+            <div class="col d-flex v-align">
+                <mat-icon color="accent">circle</mat-icon>&nbsp;&nbsp;<span class="my-auto">{{locationValue == '' ? 'Portugal' : locationValue}}</span>             
+            </div>
+
+            <div class="col d-flex v-align justify-content-end">
+                <mat-form-field appearance="outline">
+                    <mat-label>Ordernar por:</mat-label>
+                    <mat-select [(ngModel)]="sort">
+                        <mat-option *ngFor="let price of price_sort" [value]="price.value">
+                        {{price.text}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col">
-            grid
+
+        <div class="row mb-4">
+            <div class="col-2">
+                <div class="row mb-3">
+                    <mat-card class="filter-card mat-elevation-z2">
+                        <h1>Preço</h1>
+                        <mat-radio-group
+                            aria-labelledby="example-radio-group-label"
+                            class="example-radio-group"
+                            [(ngModel)]="chosen_price_range">
+                            <mat-radio-button class="example-radio-button" *ngFor="let price of price_ranges" [value]="price">
+                                {{price}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+
+                        <form [formGroup]="priceRange">
+                            <div class="row"> 
+                                <div class="col">
+                                    <mat-form-field id="min-max-field" appearance="fill">
+                                        <input type="text" matInput (input)="onPriceInput()" formControlName="min" placeholder="Min.">
+                                        <span matSuffix>€ &nbsp;</span>
+                                        <mat-error *ngIf="min?.invalid && !min?.hasError('required')">Preço inválido</mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col">
+                                    <mat-form-field id="min-max-field" appearance="fill">
+                                        <input type="text" matInput (input)="onPriceInput()" formControlName="max" placeholder="Máx.">
+                                        <span matSuffix>€ &nbsp;</span>
+                                        <mat-error *ngIf="max?.invalid && !max?.hasError('required')">Preço inválido</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-card>
+                </div>
+
+                <div class="row mb-3">
+                    <mat-card class="filter-card mat-elevation-z2">
+                        <h1>Categorias</h1>
+                        <section [formGroup]="categories">
+                            <p><mat-checkbox formControlName="automoveis">Automóveis</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="ferramentas">Ferramentas</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="roupa">Roupa</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="imoveis">Imóveis</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="eletrodomesticos">Eletrodomésticos</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="desporto">Desporto</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="tecnologia">Tecnologia</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="lazer">Lazer</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="moveis">Móveis</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="outros">Outros</mat-checkbox></p>
+                        </section>
+                    </mat-card>
+                </div>
+    
+                <div class="row">
+                    <mat-card class="filter-card mat-elevation-z2"  >
+                        <h1>Vendedores</h1>
+                        <section [formGroup]="sellers">
+                            <p><mat-checkbox formControlName="bomebarato">Bom e Barato</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="olx">OLX</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="custojusto">Custo Justo</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="ebay">eBay</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="kuantokusta">Kuantokusta</mat-checkbox></p>
+                        </section>
+                    </mat-card>
+                </div>
+            </div>
+    
+            <div class="col">
+                <mat-divider class="mb-2"></mat-divider>     
+                <mat-grid-list cols="4" rowHeight="1:1.45" [gutterSize]="'10px'">
+                    <mat-grid-tile *ngFor="let prod of products">
+                        <app-product class="mx-auto" style="width: 90%" [data]="prod"></app-product>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
         </div>
     </div>
 </div>
-

@@ -1,0 +1,12 @@
+<mat-card [class.mat-elevation-z2]="!isActive" [class.mat-elevation-z6]="isActive"
+(mouseenter)="isActive = true" (mouseleave)="isActive = false" style="border-radius: 80px;">
+    <div class="row text-center mx-auto h-100">
+        <div class="col-2 my-auto">
+            <mat-icon color="white">{{data.icon}}</mat-icon>
+        </div>
+
+        <div class="col text-center my-auto">
+            <span>{{data.name}}</span>
+        </div>
+    </div>  
+</mat-card>

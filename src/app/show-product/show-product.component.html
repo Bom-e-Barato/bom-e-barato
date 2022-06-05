@@ -1,117 +1,69 @@
 <div class="row">
     <div class="col">
         <div class="row">
-            <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+            <ngx-gallery #gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
         </div>
         <div class="row">
             <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
                 class="mat-elevation-z8">
     
-            <ng-container matColumnDef="Marketplace">
+            <ng-container matColumnDef="marketplace">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
                 Marketplace
                 </th>
                 <td mat-cell *matCellDef="let element"> {{element.marketplace}} </td>
             </ng-container>
     
-            <ng-container matColumnDef="Avaliacao">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-                Avaliação do Marketplace
-                </th>
-                <td mat-cell *matCellDef="let element"> {{element.avaliacao}} </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="Nome">
+            <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
                 Nome do Produto
                 </th>
-                <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
     
-            <ng-container matColumnDef="Preco">
+            <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
                 Preço
                 </th>
-                <td mat-cell *matCellDef="let element"> {{element.preco}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.price}} </td>
             </ng-container>
             
-            <ng-container matColumnDef="Link">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+            <ng-container matColumnDef="link">
+                <th mat-header-cell *matHeaderCellDef>
                 Link
                 </th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-raised-button color="primary">
-                        <!-- {{element.link}} -->
-                        Visitar
-                    </button>
+                    <a href="{{element.link}}">
+                        <button mat-raised-button color="primary">
+                            Visitar
+                        </button>
+                    </a>
                 </td>
             </ng-container>
     
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-        </div>
+        </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[2, 5, 10]" aria-label="Select page of users"></mat-paginator>
     </div>
     <div class="col">
-        <mat-card>
+        <mat-card class="prod-info">
             <mat-card-title>
-                Dados do Produto
+                <h1 class="text-center my-3" style="font-size: 1.6rem">{{product.name}}</h1>
             </mat-card-title>
+
             <mat-card-content>
-                Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6 OC Edition LHR - Com Fatura
+                <button mat-raised-button style="border-radius: 50px;" color="accent" selected>{{product.category}}</button>
                 <br>
                 <br>
-                Preço: 775 €
+                <p><b>Preço: </b> {{product.price + ' € '}} {{product.negotiable? '(Negociável)' : '(Preço Fixo)' }}</p>
+                <p><b>Localização: </b> {{product.location}}</p>
+                <p style="white-space: pre-line"><b>Descrição: </b><br>
+                {{product.description}}</p>
                 <br>
-                <br>
-                Asus ROG Strix GeForce RTX 3060 Ti V2 8GB GDDR6 OC
-                <br>
-                Edition LHR
-                <br>
-                Considerada uma das melhores Placas da Atualidade, relação
-                Preço/Qualidade
-                <br>
-                <br>
-                Fatura e Garantia
-                <br>
-                <br>
-                Motor Gráfico: NVIDIA® GeForce® RTX 3060 Ti
-                <br>
-                Bus: PCI Express 4.0 16x
-                <br>
-                Clore Clock: Base: 1410 MHz, Boost: 1890 MHz
-                <br>
-                Clock de Memória: 14 Gbps
-                <br>
-                Núcleos CUDA: 4864
-                <br>
-                Memória: 8GB GDDR6
-                <br>
-                Interface de Memória: 256 Bits
-                <br>
-                Interface 1/0:
-                <br>
-                3 x DisplayPort 1.4
-                <br>
-                2 x HDMI 2.1
-                <br>
-                Suporte HDCP 2.3
-                <br>
-                Versão DirectX: 12
-                <br>
-                Versão OpenGL: 4.6
-                <br>
-                Dimensões do produto: 31.85 x 14.01 x 5.78 cm
-                <br>
-                <br>
-                Entrego em Mãos em Vila do Conde e Matosinhos
-                <br>
-                <br>
-                PREÇO FIXO
             </mat-card-content>
-            <button mat-stroked-button color="primary" class="cont_btn">
-                Contactar
-            </button>
+            <button mat-stroked-button color="primary" class="cont_btn">Contactar vendedor</button>
         </mat-card>
     </div>
 </div>

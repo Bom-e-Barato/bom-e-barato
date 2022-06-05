@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { product, SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-home',
@@ -6,35 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  products = [
-    {
-      title: 'Product 1',
-      price: '100 €'
-    },
-    {
-      title: 'Product 2',
-      price: '200 €'
-    },
-    {
-      title: 'Product 3',
-      price: '300 €'
-    },
-    {
-      title: 'Product 4',
-      price: '400 €'
-    },
-    {
-      title: 'Product 5',
-      price: '500 €'
-    },
-    {
-      title: 'Product 6',
-      price: '600 €'
-    }
-  ];
+  categories: {name: string, icon: string}[];
+  promoted: product[];
+  filterValue!: {filter: string, location: string};
+  subscription: Subscription = new Subscription();
 
-  constructor() { }
+  constructor(private _service: SharedService, private _router: Router) {
+    this.categories = this._service.getCategories();
+    this.promoted = this._service.getPromotedProducts();
+  }
 
   ngOnInit(): void {
+  }
+
+  selectCategory(category: string) {
+    this._service.setCategory(category);
+    this._router.navigate(['/search']);
   }
 }

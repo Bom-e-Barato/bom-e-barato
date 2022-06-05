@@ -1,17 +1,20 @@
 <mat-card [class.mat-elevation-z2]="!isActive1" [class.mat-elevation-z8]="isActive1"
     (mouseenter)="isActive1 = true" (mouseleave)="isActive1 = false">
-
+    <h2 style="color: black;" class="text-center">{{data.name}}</h2>
+    
     <mat-card-content (click)="open_product()">
-        <img src="{{data.image}}">
+        <img src="http://localhost:4200/assets/img/{{data.img}}">
         <mat-divider inset></mat-divider>
     </mat-card-content>
-
-    <h2 (click)="open_product()">{{data.title}}</h2>      
+    
 
     <mat-card-actions>
         <div class="row">
+            <p class="text-center">{{data.marketplace}}</p>
+        </div>
+        <div class="row">
             <div class="col">
-                <button mat-button style="width: 100%;" (click)="open_product()">{{data.price}}</button>
+                <button mat-raised-button style="width: 100%;" color="primary" (click)="open_product()">{{data.price}} €</button>
             </div>
         </div>
     </mat-card-actions>

@@ -1,14 +1,21 @@
 <mat-toolbar color="primary">
     <div class="col-3">
-        <a mat-button routerLink="/home"> <img src="assets/logo.png" style="height: 4rem"></a>
-        Bom e Barato
+        <div class="row">
+            <div class="col-1 mx-3">
+                <a mat-button routerLink="/home"><img src="assets/logo.png" style="height: 2.5rem;"></a>
+            </div>
+
+            <div class="col mx-4 my-auto">
+                <span>Bom e Barato</span>
+            </div>
+        </div>
     </div>
 
     <div class="col"></div>
 
     <div class="col-1">
         <button mat-raised-button color="accent" style="border-radius: 20px;" routerLink="/ad">
-            CRIAR ANÚNCIO
+            Criar Anúncio
         </button>
     </div>
 
@@ -16,14 +23,14 @@
 
     <div class="col-1">
         <button mat-button (click)="redirectLogin()">
-            LOGIN
+            Login
             <mat-icon>login</mat-icon>
         </button>
     </div>
 
     <div class="col-1 mr-4">
         <button mat-button (click)="redirectRegister()"> 
-            REGISTO
+            Registo
             <mat-icon>app_registration</mat-icon>
         </button>
     </div>

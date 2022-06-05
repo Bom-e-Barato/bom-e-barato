@@ -14,6 +14,7 @@ export class SearchBarComponent implements OnInit {
   districts: string[] = ['Aveiro', 'Beja', 'Braga', 'Bragança', 'Castelo Branco', 'Coimbra', 'Évora', 'Faro', 'Guarda', 'Leiria', 'Lisboa', 'Portalegre', 'Porto', 'Santarém', 'Setúbal', 'Castelo', 'Vila Real', 'Viseu'];
   
   filterValue: string = '';
+  locationValue: string = '';
   form!: FormGroup;
   filteredOptions?: Observable<string[]>;
 
@@ -29,6 +30,10 @@ export class SearchBarComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value)),
     );
+
+    this.form.get('location')?.valueChanges.subscribe(value => {
+      this.districts.includes(value) == true || value == '' ? this.applyLocation() : null
+    });
   }
 
   /* Shorthands for form controls (used from within template) */
@@ -53,9 +58,14 @@ export class SearchBarComponent implements OnInit {
     return this.districts.filter(option => option.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(filterValue));
   }
 
+  applyLocation() {
+    this.locationValue = this.form.get('location')?.value;
+    this._service.setFilter(this.filterValue, this.locationValue);
+  }
+
   applySearch() {
-    this.filterValue = this.form.get('filter')?.value;//(event.target as HTMLInputElement).value;
-    this._service.setFilter(this.filterValue);
+    this.filterValue = this.form.get('filter')?.value;
+    this._service.setFilter(this.filterValue, this.locationValue);
 
     /* Route to the search page */
     if (this.filterValue.length > 0) {
@@ -66,9 +76,6 @@ export class SearchBarComponent implements OnInit {
     if (this.filterValue.length == 0) {
       this._router.navigate(['/']);
     }
-  }
-
-  applyLocation() {
   }
 }
 

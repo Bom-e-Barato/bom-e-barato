@@ -2,42 +2,49 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import {NgxGalleryOptions} from '@kolkov/ngx-gallery';
+import {NgxGalleryComponent, NgxGalleryOptions} from '@kolkov/ngx-gallery';
 import {NgxGalleryImage} from '@kolkov/ngx-gallery';
 import {NgxGalleryAnimation} from '@kolkov/ngx-gallery';
+import { product, SharedService } from '../shared.service';
+import {MatPaginator} from '@angular/material/paginator';
+import { Subscription } from 'rxjs';
 
-export interface Product {
-  marketplace: string;
-  avaliacao: number;
-  nome: string;
-  preco: number;
-  link: string;
-}
-
-const ELEMENT_DATA: Product[] = [
-  {marketplace: "OLX", avaliacao:4.1, nome: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6", preco:749, link:""},
-  {marketplace: "CustoJusto", avaliacao:4.0, nome: "Asus ROG Strix RTX 1070 Ti V2 8GB GDDR5", preco:560, link:""},
-  {marketplace: "eBay", avaliacao:3.9, nome: "Asus ROG Strix RTX 3060 Ti V2 6GB GDDR6", preco:500, link:""},
-  {marketplace: "Amazon", avaliacao:4.3, nome: "Gigabyte GeForce RTX 3060 Ti VISION OC LHR 8GB GDDR6", preco:770, link:""},
+const ELEMENT_DATA: product[] = [
+  {marketplace: "OLX", name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6", price:749, link:"https://olx.pt", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},  
+  {marketplace: "CustoJusto", name: "Asus ROG Strix RTX 1070 Ti V2 8GB GDDR5", price:560, link:"https://custojusto.pt", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},
+  {marketplace: "eBay", name: "Asus ROG Strix RTX 3060 Ti V2 6GB GDDR6", price:500, link:"https://ebay.com", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},
+  {marketplace: "Amazon", name: "Gigabyte GeForce RTX 3060 Ti VISION OC LHR 8GB GDDR6", price:770, link:"https://amazon.com", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},
 ];
-
-
 
 @Component({
   selector: 'app-show-product',
   templateUrl: './show-product.component.html',
   styleUrls: ['./show-product.component.scss']
 })
-export class ShowProductComponent implements AfterViewInit {
-  displayedColumns: string[] = ["Marketplace", "Avaliacao", "Nome", "Preco", "Link"];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+export class ShowProductComponent implements OnInit {
+  products: product[] = [];
+  product!: product;
+  subscription: Subscription = new Subscription();
 
+  displayedColumns: string[] = ["marketplace", "name", "price", "link"];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('gallery') gallery!: NgxGalleryComponent;
   galleryOptions!: NgxGalleryOptions[];
   galleryImages!: NgxGalleryImage[];
 
-  constructor(private _liveAnnouncer: LiveAnnouncer) { }
+  constructor(private _liveAnnouncer: LiveAnnouncer, private _service: SharedService) {
+    this.subscription = this._service.productOpened.subscribe((data: product) => {
+      this.product = data;
+    });
+  }
+
 
   ngOnInit(): void {
+    this.products = this._service.getPromotedProducts();
+
     this.galleryOptions = [
       {
         width: '600px',
@@ -64,26 +71,31 @@ export class ShowProductComponent implements AfterViewInit {
 
     this.galleryImages = [
       {
-        small: 'http://localhost:4200/assets/img/nvidia-card.jpg',
-        medium: 'http://localhost:4200/assets/img/nvidia-card.jpg',
-        big: 'http://localhost:4200/assets/img/nvidia-card.jpg'
+        small: 'http://localhost:4200/assets/img/' + this.product.img,
+        medium: 'http://localhost:4200/assets/img/' + this.product.img,
+        big: 'http://localhost:4200/assets/img/' + this.product.img
       },
       {
-        small: 'http://localhost:4200/assets/img/nvidia-card.jpg',
-        medium: 'http://localhost:4200/assets/img/nvidia-card.jpg',
-        big: 'http://localhost:4200/assets/img/nvidia-card.jpg'
+        small: 'http://localhost:4200/assets/img/' + this.product.img,
+        medium: 'http://localhost:4200/assets/img/' + this.product.img,
+        big: 'http://localhost:4200/assets/img/' + this.product.img
       },
       {
-        small: 'http://localhost:4200/assets/img/nvidia-card.jpg',
-        medium: 'http://localhost:4200/assets/img/nvidia-card.jpg',
-        big: 'http://localhost:4200/assets/img/nvidia-card.jpg'
-      }
+        small: 'http://localhost:4200/assets/img/' + this.product.img,
+        medium: 'http://localhost:4200/assets/img/' + this.product.img,
+        big: 'http://localhost:4200/assets/img/' + this.product.img
+      },      
+      {
+        small: 'http://localhost:4200/assets/img/' + this.product.img,
+        medium: 'http://localhost:4200/assets/img/' + this.product.img,
+        big: 'http://localhost:4200/assets/img/' + this.product.img
+      }      
     ];
   }
 
-  @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 

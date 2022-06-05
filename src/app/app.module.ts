@@ -28,10 +28,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ChatComponent } from './chat/chat.component';
-
+import { MatChipsModule } from '@angular/material/chips';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { CategoryComponent } from './category/category.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,8 @@ import { ChatComponent } from './chat/chat.component';
     SearchBarComponent,
     SearchComponent,
     ProductComponent,
-    ChatComponent
+    ChatComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +76,10 @@ import { ChatComponent } from './chat/chat.component';
     MatProgressSpinnerModule,
     HttpClientModule,
     MatRadioModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatChipsModule,
+    MatPaginatorModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
