@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'ad', component: CreateAdComponent },
   { path: 'search', component: SearchComponent },
-  {path:'chat', component:ChatComponent},
+  { path: 'chat', component: ChatComponent },
   { path: '',   redirectTo: '/home', pathMatch: 'full' },   /* Default routing to HomeComponent */
 
 ];

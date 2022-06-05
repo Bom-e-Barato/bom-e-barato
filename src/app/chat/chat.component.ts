@@ -20,7 +20,11 @@ const ELEMENT_DATA: User[] = [
 
 ];
 
-const messages= [{text: 'ola', id: 0}, {text: 'td bem?', id:0}, {text: 'oi como estas', id: 1},{text: 'ola', id: 0}, {text: 'td bem?', id:0}, {text: 'oi como estas', id: 1}];
+const messages= [
+  {text: 'ola', id: 0},
+  {text: 'o produto ainda está disponível?', id: 0},
+  {text: 'sim está!', id: 1}
+];
 
 
 @Component({
