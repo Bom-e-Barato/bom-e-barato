@@ -2,8 +2,8 @@
     width: 20rem;
 }
 
-.filter-button {
-    margin-bottom: 10px;
+mat-divider {
+    margin-left: 10px;
 }
 
 .example-radio-group {
@@ -25,3 +25,7 @@ ul {
     list-style-type: none;
 }
 
+span {
+    align-content: center;
+    font-size: 1rem;
+}

@@ -50,30 +50,20 @@
     <div class="col">
         <mat-card class="prod-info">
             <mat-card-title>
-                <h1>
-                    {{product.name}}
-                </h1>
+                <h1 class="text-center my-3" style="font-size: 1.6rem">{{product.name}}</h1>
             </mat-card-title>
+
             <mat-card-content>
                 <button mat-raised-button style="border-radius: 50px;" color="accent" selected>{{product.category}}</button>
                 <br>
                 <br>
-                <b>Price: </b> {{product.price}}             
-                <br>   
-                <br>   
-                <b>Description: </b><span style="white-space: pre-line">{{product.description}}</span>                 
+                <p><b>Preço: </b> {{product.price + ' € '}} {{product.negotiable? '(Negociável)' : '(Preço Fixo)' }}</p>
+                <p><b>Localização: </b> {{product.location}}</p>
+                <p style="white-space: pre-line"><b>Descrição: </b><br>
+                {{product.description}}</p>
                 <br>
-                <br>   
-                <b>Location: </b> {{product.location}}                
-                <br>
-                <br>
-                <div *ngIf="product.negotiable">
-                    <p><b>Negotiable</b></p>
-                </div>
             </mat-card-content>
-            <button mat-stroked-button color="primary" class="cont_btn">
-                Contactar
-            </button>
+            <button mat-stroked-button color="primary" class="cont_btn">Contactar vendedor</button>
         </mat-card>
     </div>
 </div>

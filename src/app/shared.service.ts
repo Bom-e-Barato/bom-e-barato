@@ -28,6 +28,10 @@ export class SharedService {
   private categorySource = new BehaviorSubject<string>(localStorage.getItem('category') ? localStorage.getItem('category')! : '');
   category = this.categorySource.asObservable();
 
+  /* Initialize the product information */
+  private productSource = new BehaviorSubject<product>(JSON.parse(localStorage.getItem('product-page')!));
+  productOpened = this.productSource.asObservable();
+
   readonly API = 'http://127.0.0.1:8000/exercise/api';
 
   products : product[] = [
@@ -81,7 +85,7 @@ export class SharedService {
       price: 700,
       link: "",
       img: "nvidia-card.jpg",
-      description: "Placa gr+afica AMD RX6900 XT em otimo estado",
+      description: "6GB de memória GDDR6.\nPlaca gráfica AMD RX6900 XT em otimo estado.",
       promoted: true,
       negotiable: false,
       category: 'Tecnologia',
@@ -292,5 +296,11 @@ export class SharedService {
 
   getProducts(filter: string, location: string) {
     return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
+  }
+
+   /* Change the opened product page information */
+   openProductPage(product: product) {
+    this.productSource.next(product);
+    localStorage.setItem('product-page', JSON.stringify(product));
   }
 }

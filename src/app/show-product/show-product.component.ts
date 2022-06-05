@@ -7,6 +7,7 @@ import {NgxGalleryImage} from '@kolkov/ngx-gallery';
 import {NgxGalleryAnimation} from '@kolkov/ngx-gallery';
 import { product, SharedService } from '../shared.service';
 import {MatPaginator} from '@angular/material/paginator';
+import { Subscription } from 'rxjs';
 
 const ELEMENT_DATA: product[] = [
   {marketplace: "OLX", name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6", price:749, link:"https://olx.pt", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},  
@@ -21,6 +22,10 @@ const ELEMENT_DATA: product[] = [
   styleUrls: ['./show-product.component.scss']
 })
 export class ShowProductComponent implements OnInit {
+  products: product[] = [];
+  product!: product;
+  subscription: Subscription = new Subscription();
+
   displayedColumns: string[] = ["marketplace", "name", "price", "link"];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   
@@ -30,16 +35,15 @@ export class ShowProductComponent implements OnInit {
   galleryOptions!: NgxGalleryOptions[];
   galleryImages!: NgxGalleryImage[];
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private _service: SharedService) { }
+  constructor(private _liveAnnouncer: LiveAnnouncer, private _service: SharedService) {
+    this.subscription = this._service.productOpened.subscribe((data: product) => {
+      this.product = data;
+    });
+  }
 
-  products: product[] = [];
-  product!: product;
 
   ngOnInit(): void {
     this.products = this._service.getPromotedProducts();
-
-    // REMOVE THIS AFTER
-    this.product = this.products[0];
 
     this.galleryOptions = [
       {

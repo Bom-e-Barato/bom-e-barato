@@ -4,16 +4,25 @@
     </div>
 
     <div *ngIf="!loading">
-        Pesquisar: {{filterValue}}
+        <div class="row align-items-center">
+            <div class="col d-flex v-align">
+                <mat-icon color="accent">circle</mat-icon>&nbsp;&nbsp;<span class="my-auto">{{locationValue == '' ? 'Portugal' : locationValue}}</span>             
+            </div>
+
+            <div class="col d-flex v-align justify-content-end">
+                <mat-form-field appearance="outline">
+                    <mat-label>Ordernar por:</mat-label>
+                    <mat-select [(ngModel)]="sort">
+                        <mat-option *ngFor="let price of price_sort" [value]="price.value">
+                        {{price.text}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
 
         <div class="row mb-4">
             <div class="col-2">
-                <div class="row">
-                    <button class="filter-button" mat-raised-button color="primary" (click)="filter()">
-                        Filter
-                    </button>
-                </div>
-
                 <div class="row mb-3">
                     <mat-card class="filter-card mat-elevation-z2">
                         <h1>Preço</h1>
@@ -57,7 +66,7 @@
                             <p><mat-checkbox formControlName="roupa">Roupa</mat-checkbox></p>
                             <p><mat-checkbox formControlName="imoveis">Imóveis</mat-checkbox></p>
                             <p><mat-checkbox formControlName="eletrodomesticos">Eletrodomésticos</mat-checkbox></p>
-                            <p><mat-checkbox formControlName="desporto">Desport</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="desporto">Desporto</mat-checkbox></p>
                             <p><mat-checkbox formControlName="tecnologia">Tecnologia</mat-checkbox></p>
                             <p><mat-checkbox formControlName="lazer">Lazer</mat-checkbox></p>
                             <p><mat-checkbox formControlName="moveis">Móveis</mat-checkbox></p>
@@ -80,7 +89,8 @@
                 </div>
             </div>
     
-            <div class="col">       
+            <div class="col">
+                <mat-divider class="mb-2"></mat-divider>     
                 <mat-grid-list cols="4" rowHeight="1:1.45" [gutterSize]="'10px'">
                     <mat-grid-tile *ngFor="let prod of products">
                         <app-product class="mx-auto" style="width: 90%" [data]="prod"></app-product>

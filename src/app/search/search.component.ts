@@ -17,18 +17,21 @@ export class SearchComponent implements OnInit {
   subscriptionC: Subscription = new Subscription();
   
   chosen_price_range!: string;
-  price_ranges = ["Até 50", "50-150", "150-300", "300-600", "Acima de 600"];
+  price_ranges: string[] = ["Até 50", "50-150", "150-300", "300-600", "Acima de 600"];
+  price_sort: any[] = [{text: 'Mais barato', value: 'low'}, {text: 'Mais caro', value: 'high'}]; 
+  sort:string = '';
   
   sellers: FormGroup;
   categories: FormGroup;
   priceRange: FormGroup;
+
   all_products: product[] = [];
   all_categories: {name: string, icon: string}[];
   all_marketplaces: string[] = ["Custo Justo", "eBay", "OLX", "Kuantokusta", "Bom e Barato"];
   products: product[] = [];
 
-  constructor(private _service: SharedService, fb:FormBuilder) {
-    this.sellers = fb.group({
+  constructor(private _service: SharedService, private _formBuilder: FormBuilder) {
+    this.sellers = _formBuilder.group({
       custojusto : false,
       ebay : false,
       olx : false,
@@ -36,7 +39,7 @@ export class SearchComponent implements OnInit {
       bomebarato : false
     });
 
-    this.categories = fb.group({
+    this.categories = _formBuilder.group({
       automoveis : false,
       ferramentas: false,
       roupa: false,
@@ -49,7 +52,7 @@ export class SearchComponent implements OnInit {
       outros: false
     });
 
-    this.priceRange = fb.group({ min: '', max: '' }, {validator: minValidator});
+    this.priceRange = _formBuilder.group({ min: '', max: '' }, {validator: minValidator});
     
     this.subscriptionF = this._service.filter.subscribe((data: any) => {
       this.loading = true;
@@ -144,11 +147,6 @@ export class SearchComponent implements OnInit {
   ngOnDestroy() {
     this.subscriptionF.unsubscribe();
     this.subscriptionC.unsubscribe();
-  }
-  
-  filter() {
-    console.log(this.chosen_price_range);
-    console.log(this.sellers.value); 
   }
 }
 
