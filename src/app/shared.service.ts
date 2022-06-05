@@ -37,7 +37,7 @@ export class SharedService {
   products : product[] = [
     {
       marketplace: "OLX",
-      name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6",
+      name: "Asus ROG Strix RTX 3060 Ti",
       price: 775,
       link: "https://www.google.com",
       img: "nvidia-card.jpg",
@@ -47,7 +47,7 @@ export class SharedService {
     },
     {
       marketplace: "OLX",
-      name: "Zotac RTX 3060 Ti 8GB GDDR6",
+      name: "Zotac RTX 3060 Ti 8GB",
       price: 650,
       link: "htts://www.google.com",
       img: "nvidia-card.jpg",
@@ -57,7 +57,7 @@ export class SharedService {
     },
     {
       marketplace: "Bom e Barato",
-      name: "MSI RTX 3060 Ti 8GB GDDR6",
+      name: "MSI RTX 3060 Ti 8GB",
       price: 800,
       link: "",
       img: "nvidia-card.jpg",

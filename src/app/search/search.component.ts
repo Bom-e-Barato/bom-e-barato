@@ -18,8 +18,9 @@ export class SearchComponent implements OnInit {
   
   chosen_price_range!: string;
   price_ranges: string[] = ["Até 50", "50-150", "150-300", "300-600", "Acima de 600"];
-  price_sort: any[] = [{text: 'Mais barato', value: 'low'}, {text: 'Mais caro', value: 'high'}]; 
-  sort:string = '';
+  range = null;
+  price_sort: any[] = [{text: 'Relevância', value: 'relevance'}, {text: 'Mais barato', value: 'low'}, {text: 'Mais caro', value: 'high'}]; 
+  sort: any = this.price_sort[0].value;
   
   sellers: FormGroup;
   categories: FormGroup;
@@ -98,6 +99,37 @@ export class SearchComponent implements OnInit {
     });
   };
 
+  // Sorting the data by selected order (price, relevance, etc)
+  sortData() {
+    this.products = this.products.sort((a: product, b: product) => {
+      if (this.sort == 'low') {
+        if (a.price < b.price) return -1;
+        if (a.price > b.price) return 1;
+        return 0;
+      } else if (this.sort == 'high') {
+        if (a.price > b.price) return -1;
+        if (a.price < b.price) return 1;
+        return 0;
+      } else {
+        return Math.round(Math.random() * (1 - (-1)) + (-1));
+      }
+    });
+  }
+
+  // Select a price range
+  checkState(event: Event, el: any) {
+    event.preventDefault();
+    if (this.range && this.range === el.value) {
+      el.checked = false;
+      this.range = null;
+    } else {
+      this.range = el.value
+      el.checked = true;
+    }
+
+    this.refreshFilters();
+  }
+
   /* Shorthands for form controls (used from within template) */
   get min() { return this.priceRange.get('min') };
   get max() { return this.priceRange.get('max') };
@@ -114,6 +146,7 @@ export class SearchComponent implements OnInit {
   }
 
   refreshFilters() {
+    // Filter product by category
     let products_c: any[] = [];
     let c_false = true;
     this.all_categories.forEach((c: any) => {
@@ -124,6 +157,7 @@ export class SearchComponent implements OnInit {
     });
     if (c_false) products_c = Object.create(this.all_products);
 
+    // Filter product by seller
     let products_m: any[] = [];
     let m_false: boolean = true;
     this.all_marketplaces.forEach((m: string) => {
@@ -134,14 +168,32 @@ export class SearchComponent implements OnInit {
     });
     if (m_false) products_m = Object.create(this.all_products);
 
+    // Filter product by price (not fully working)
     let products_p: any[] = [];
     if (Number(this.max?.value) == 0)
       products_p = this.all_products.filter((p: product) => p.price >= Number(this.min?.value));
     else
       products_p = this.all_products.filter((p: product) => p.price >= Number(this.min?.value) && p.price <= Number(this.max?.value));
 
+    // Filter product by range
+    let products_r: any[] = [];
+    if (this.range == 'Até 50')
+      products_r = this.all_products.filter((p: product) => p.price <= 50);
+    else if (this.range == '50-150')
+      products_r = this.all_products.filter((p: product) => p.price >= 50 && p.price <= 150);
+    else if (this.range == '150-300')
+      products_r = this.all_products.filter((p: product) => p.price >= 150 && p.price <= 300);
+    else if (this.range == '300-600')
+      products_r = this.all_products.filter((p: product) => p.price >= 300 && p.price <= 600);
+    else if (this.range == 'Acima de 600')
+      products_r = this.all_products.filter((p: product) => p.price >= 600);
+    else
+      products_r = this.all_products;
+
     this.products = products_c.filter(value => products_m.includes(value));
+    this.products = products_r.filter(value => this.products.includes(value));
     this.products = products_p.filter(value => this.products.includes(value));
+    this.sortData();
   }
 
   ngOnDestroy() {

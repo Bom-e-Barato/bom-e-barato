@@ -12,7 +12,7 @@
             <div class="col d-flex v-align justify-content-end">
                 <mat-form-field appearance="outline">
                     <mat-label>Ordernar por:</mat-label>
-                    <mat-select [(ngModel)]="sort">
+                    <mat-select [(ngModel)]="sort" (selectionChange)="sortData()">
                         <mat-option *ngFor="let price of price_sort" [value]="price.value">
                         {{price.text}}
                         </mat-option>
@@ -26,11 +26,8 @@
                 <div class="row mb-3">
                     <mat-card class="filter-card mat-elevation-z2">
                         <h1>Preço</h1>
-                        <mat-radio-group
-                            aria-labelledby="example-radio-group-label"
-                            class="example-radio-group"
-                            [(ngModel)]="chosen_price_range">
-                            <mat-radio-button class="example-radio-button" *ngFor="let price of price_ranges" [value]="price">
+                        <mat-radio-group [(ngModel)]="chosen_price_range">
+                            <mat-radio-button #button (click)="checkState($event, button)" *ngFor="let price of price_ranges" [value]="price">
                                 {{price}}
                             </mat-radio-button>
                         </mat-radio-group>

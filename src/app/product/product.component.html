@@ -1,13 +1,12 @@
 <mat-card [class.mat-elevation-z2]="!isActive1" [class.mat-elevation-z8]="isActive1"
     (mouseenter)="isActive1 = true" (mouseleave)="isActive1 = false">
-    <h2 style="color: black;" class="text-center">{{data.name}}</h2>
+    <h2 style="color: black;" class="text-center">{{data.name}}</h2> 
     
     <mat-card-content (click)="open_product()">
         <img src="http://localhost:4200/assets/img/{{data.img}}">
         <mat-divider inset></mat-divider>
     </mat-card-content>
     
-
     <mat-card-actions>
         <div class="row">
             <p class="text-center">{{data.marketplace}}</p>
