@@ -295,7 +295,13 @@ export class SharedService {
   }
 
   getProducts(filter: string, location: string) {
-    return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
+    if (location == '') {
+      return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
+    } else {
+      return this.products.filter((product: product) => 
+        product.name.toLowerCase().includes(filter.toLowerCase()) && product.location! == location
+      );
+    }
   }
 
    /* Change the opened product page information */

@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
   subscriptionC: Subscription = new Subscription();
   
   chosen_price_range!: string;
-  price_ranges: string[] = ["Até 50", "50-150", "150-300", "300-600", "Acima de 600"];
+  price_ranges: string[] = ["Até 50€", "50€ - 150€", "150€ - 300€", "300€ - 600€", "Acima de 600€"];
   range = null;
   price_sort: any[] = [{text: 'Relevância', value: 'relevance'}, {text: 'Mais barato', value: 'low'}, {text: 'Mais caro', value: 'high'}]; 
   sort: any = this.price_sort[0].value;
@@ -177,15 +177,15 @@ export class SearchComponent implements OnInit {
 
     // Filter product by range
     let products_r: any[] = [];
-    if (this.range == 'Até 50')
+    if (this.range == 'Até 50€')
       products_r = this.all_products.filter((p: product) => p.price <= 50);
-    else if (this.range == '50-150')
+    else if (this.range == '50€ - 150€')
       products_r = this.all_products.filter((p: product) => p.price >= 50 && p.price <= 150);
-    else if (this.range == '150-300')
+    else if (this.range == '150€ - 300€')
       products_r = this.all_products.filter((p: product) => p.price >= 150 && p.price <= 300);
-    else if (this.range == '300-600')
+    else if (this.range == '300€ - 600€')
       products_r = this.all_products.filter((p: product) => p.price >= 300 && p.price <= 600);
-    else if (this.range == 'Acima de 600')
+    else if (this.range == 'Acima de 600€')
       products_r = this.all_products.filter((p: product) => p.price >= 600);
     else
       products_r = this.all_products;
