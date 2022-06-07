@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { SharedService } from './shared.service';
+import { account_response, SharedService } from './shared.service';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +13,12 @@ import { SharedService } from './shared.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'bom-e-barato';
+  subscription: Subscription = new Subscription();
+  loggedIn: boolean = false;
 
-  constructor(public dialog: MatDialog, private _router: Router, private _service: SharedService) {}
+  constructor(public dialog: MatDialog, private _router: Router, private _service: SharedService, private _snackBar: MatSnackBar) {
+    this.subscription = this._service.currentLogStatus.subscribe(logStatus => this.loggedIn = logStatus);
+  }
 
   ngOnInit() {
   }
@@ -28,5 +33,23 @@ export class AppComponent {
   /* Open Register Dialog */
   redirectRegister() {
     const dialogRef = this.dialog.open(RegisterComponent);
+  }
+
+  logout() {
+    this._service.changeLogStatus(false);
+    this._service.logout().subscribe((data: any) => {
+      if ("v" in data) {
+        data as account_response;
+        if (data.v == true) {
+          this._snackBar.open('Logout bem sucedido!', 'Close', { "duration": 2500 });
+        } else {
+          this._snackBar.open('Logout falhou!', 'Close', { "duration": 2500 });
+        }
+      } else {
+        this._snackBar.open('Logout falhou!', 'Close', { "duration": 2500 });
+      }  
+    });
+    
+    this._router.navigate(['/home']);
   }
 }

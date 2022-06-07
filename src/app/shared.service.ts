@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -16,10 +16,34 @@ export interface product {
   location?: string;
 }
 
+export interface login {
+  email: string,
+  password: string
+}
+
+export interface person {
+  email: string,
+  first_name: string,
+  last_name: string,
+  birth_date: string,
+  password?: string,
+  avatar?: string | null,
+}
+
+export interface account_response {
+  v: boolean,
+  m: string,
+  t?: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
+  /* Initialize the log status as true or false*/
+  private logStatusSource = new BehaviorSubject<boolean>(localStorage.getItem('loggedIn') === 'true' ? true : false);
+  currentLogStatus = this.logStatusSource.asObservable();
+
   /* Initialize the filter information */
   private filterSource = new BehaviorSubject<any>(localStorage.getItem('filter') ? JSON.parse(localStorage.getItem('filter')!) : {filter: '', location: ''});
   filter = this.filterSource.asObservable();
@@ -32,7 +56,8 @@ export class SharedService {
   private productSource = new BehaviorSubject<product>(JSON.parse(localStorage.getItem('product-page')!));
   productOpened = this.productSource.asObservable();
 
-  readonly API = 'http://127.0.0.1:8000/exercise/api';
+  readonly AD_API = 'http://127.0.0.1:8000/advertisement/api';
+  readonly ACCOUNT_API = 'http://127.0.0.1:8000/account/api';
 
   products : product[] = [
     {
@@ -252,6 +277,39 @@ export class SharedService {
 
   constructor(private _http: HttpClient) { }
 
+  /* Change log status used across the app*/
+  changeLogStatus(logStatus: boolean) {
+    this.logStatusSource.next(logStatus);
+    localStorage.setItem('loggedIn', logStatus.toString());
+  }
+
+  /* Login with email and password */
+  login(credentials: login) {
+    return this._http.post(this.ACCOUNT_API + '/login', credentials);
+  }
+
+  /* Logout with account response */
+  logout() {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    /* Remove the token from local storage */
+    localStorage.removeItem('token');
+    return this._http.post(this.ACCOUNT_API + '/logout', token, httpOptions);
+  }
+
+  /* Register with person attributes */
+  register(person: person) {
+    return this._http.post(this.ACCOUNT_API + '/register', person);
+  }
+
+
   /* Change the filter value */
   setFilter(filter: string, location: string) {
     if (this.filterSource.value.filter !== filter) {
@@ -276,10 +334,6 @@ export class SharedService {
     localStorage.setItem('category', category);
   }
 
-  dummyAPI() {
-    return this._http.get(this.API + '/exercises');
-  }
-
   getCategories() {
     return [{ name: 'Automóveis', icon: 'directions_car' }, { name: 'Ferramentas', icon: 'construction' },
             { name: 'Roupa', icon: 'checkroom' }, { name: 'Imóveis', icon: 'home' },
@@ -295,12 +349,16 @@ export class SharedService {
   }
 
   getProducts(filter: string, location: string) {
+    var handler_args: any = {search_term: filter, max_pages: 1}
+
     if (location == '') {
       return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
+      // return this._http.post(this.API + '/get_all_ads', handler_args);
     } else {
       return this.products.filter((product: product) => 
         product.name.toLowerCase().includes(filter.toLowerCase()) && product.location! == location
       );
+      // return this._http.post(this.API + '/get_all_ads', handler_args);
     }
   }
 

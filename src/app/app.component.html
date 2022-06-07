@@ -11,28 +11,30 @@
         </div>
     </div>
 
-    <div class="col"></div>
+    <div class="col-4"></div>
 
-    <div class="col-1">
-        <button mat-raised-button color="accent" style="border-radius: 20px;" routerLink="/ad">
-            Criar Anúncio
+    <div class="col">
+        <button *ngIf="loggedIn" mat-raised-button color="accent" style="border-radius: 20px;" routerLink="/ad">
+            Criar Anúncio&nbsp;&nbsp;<mat-icon>add</mat-icon>
+        </button>
+    </div>
+
+    <div class="col">
+        <button *ngIf="loggedIn" mat-raised-button color="accent" style="border-radius: 20px;" routerLink="/chat">
+            Ver Mensagens&nbsp;&nbsp;<mat-icon>chat</mat-icon>
         </button>
     </div>
 
     <div style="width: 50px;"></div>
 
     <div class="col-1">
-        <button mat-button (click)="redirectLogin()">
-            Login
-            <mat-icon>login</mat-icon>
-        </button>
+        <button *ngIf="!loggedIn" mat-button (click)="redirectLogin()">Login<mat-icon>login</mat-icon></button>
+        <button *ngIf="loggedIn" mat-button>Perfil<mat-icon>account_circle</mat-icon></button>
     </div>
 
     <div class="col-1 mr-4">
-        <button mat-button (click)="redirectRegister()"> 
-            Registo
-            <mat-icon>app_registration</mat-icon>
-        </button>
+        <button *ngIf="!loggedIn" mat-button (click)="redirectRegister()">Registo<mat-icon>app_registration</mat-icon></button>
+        <button *ngIf="loggedIn" mat-button (click)="logout()">Logout<mat-icon>exit_to_app</mat-icon></button>
     </div>
 </mat-toolbar>
 

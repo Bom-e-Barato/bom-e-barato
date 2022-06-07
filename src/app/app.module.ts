@@ -35,6 +35,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CategoryComponent } from './category/category.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatAutocompleteModule,
     MatChipsModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
