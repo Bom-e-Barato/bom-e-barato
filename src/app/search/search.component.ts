@@ -57,20 +57,16 @@ export class SearchComponent implements OnInit {
     
     this.subscriptionF = this._service.filter.subscribe((data: any) => {
       this.loading = true;
-      // this._service.dummyAPI().subscribe((data: any) => {
-      //   this.loading = false;
-      // });
-      
-      setTimeout(() => {
-        console.log(data);  // Debug
-        this.filterValue = data.filter;
-        this.locationValue = data.location;
-        this.loading = false;
-        
-        /* Get all products from the Query */
-        this.all_products = this._service.getProducts(this.filterValue, this.locationValue);
-        this.products = Object.create(this.all_products);
+      console.log(data);  // Debug
+      this.filterValue = data.filter;
+      this.locationValue = data.location;
 
+      this._service.getProducts(this.filterValue, this.locationValue).subscribe((data: any) => {
+        this.loading = false;
+        this.all_products = data;
+        this.products = Object.create(this.all_products);
+        console.log(data);
+        
         /* Get the Category chosen from the Homepage */
         this.subscriptionC = this._service.category.subscribe((c: string) => {
           if (c !== '') {
@@ -79,7 +75,27 @@ export class SearchComponent implements OnInit {
             this.products = this.products.filter((p: product) => p.category == c);
           }
         });
-      }, 500);
+      });
+      
+      // setTimeout(() => {
+      //   console.log(data);  // Debug
+      //   this.filterValue = data.filter;
+      //   this.locationValue = data.location;
+      //   this.loading = false;
+        
+      //   /* Get all products from the Query */
+      //   this.all_products = this._service.getProducts(this.filterValue, this.locationValue);
+      //   this.products = Object.create(this.all_products);
+
+      //   /* Get the Category chosen from the Homepage */
+      //   this.subscriptionC = this._service.category.subscribe((c: string) => {
+      //     if (c !== '') {
+      //       this.categories.get(c.toLocaleLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, ""))?.setValue(true);
+      //       this._service.setCategory('');
+      //       this.products = this.products.filter((p: product) => p.category == c);
+      //     }
+      //   });
+      // }, 500);
     });
 
     this.all_categories = this._service.getCategories();

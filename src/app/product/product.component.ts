@@ -14,12 +14,15 @@ export class ProductComponent implements OnInit {
 
   constructor(private _router: Router, private _service: SharedService) { }
 
-  ngOnInit(): void {   
+  ngOnInit(): void {
   }
   
   /* Open the page with the product details */
   open_product() {
-    this._service.openProductPage(this.data);
-    this._router.navigate(['/product']);
+    if (this.data.link != '')
+      window.location.href = this.data.link;
+    else
+      this._service.openProductPage(this.data);
+      this._router.navigate(['/product']);
   }
 }

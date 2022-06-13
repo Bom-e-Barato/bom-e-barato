@@ -3,7 +3,7 @@
     <h2 style="color: black;" class="text-center">{{data.name}}</h2> 
     
     <mat-card-content (click)="open_product()">
-        <img src="http://localhost:4200/assets/img/{{data.img}}">
+        <img src="{{data.marketplace == 'Bom e Barato' ? 'http://localhost:4200/assets/img/' + data.img:  data.img}}">
         <mat-divider inset></mat-divider>
     </mat-card-content>
     

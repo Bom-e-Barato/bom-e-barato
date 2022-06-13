@@ -352,13 +352,13 @@ export class SharedService {
     var handler_args: any = {search_term: filter, max_pages: 1}
 
     if (location == '') {
-      return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
-      // return this._http.post(this.API + '/get_all_ads', handler_args);
+      //return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
+      return this._http.post(this.AD_API + '/get_all_ads', handler_args);
     } else {
-      return this.products.filter((product: product) => 
-        product.name.toLowerCase().includes(filter.toLowerCase()) && product.location! == location
-      );
-      // return this._http.post(this.API + '/get_all_ads', handler_args);
+      // return this.products.filter((product: product) => 
+      //   product.name.toLowerCase().includes(filter.toLowerCase()) && product.location! == location
+      // );
+      return this._http.post(this.AD_API + '/get_all_ads', handler_args);
     }
   }
 
