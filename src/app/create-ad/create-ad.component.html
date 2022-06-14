@@ -23,8 +23,23 @@
             </div>
             
             <div class="row">
+
+
                 <mat-card>
-                    <img src="assets/img/white-grafica.png" id="img" alt="">
+                    <image-cropper
+                        [ngStyle]="{'opacity': imageChangedEvent == '' ? '0' : '1'}"
+                        [imageURL]=""
+                        [imageChangedEvent]="imageChangedEvent"
+                        [maintainAspectRatio]="true"
+                        format="png"
+                        (imageCropped)="imageCropped($event)">
+                    </image-cropper>
+                    <div class="row mt-3">
+                        <mat-form-field>
+                            <ngx-mat-file-input formControlName ="imagem"placeholder="Escolher Imagem" (change)="fileChangeEvent($event)"></ngx-mat-file-input>
+                            <mat-icon matSuffix>folder</mat-icon>
+                        </mat-form-field>
+                    </div>
                     <img src="assets/img/white-grafica.png" id="img" alt="">
                     <img src="assets/img/white-grafica.png" id="img" alt="">
                     <img src="assets/img/white-grafica.png" id="img" alt="">
@@ -75,7 +90,7 @@
             <mat-checkbox  formControlName="promover">Promover</mat-checkbox>
                 
             <div class="row mt-4 mb-1 mx-auto">
-                <button mat-raised-button color="accent" type="submit" mat-button>Criar</button>
+                <button mat-raised-button color="accent" type="submit"  mat-button>Criar</button>
                 <button mat-raised-button color="accent" (click)="clear()" mat-button>Cancelar</button>
             </div>
         

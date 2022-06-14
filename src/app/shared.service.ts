@@ -367,4 +367,28 @@ export class SharedService {
     this.productSource.next(product);
     localStorage.setItem('product-page', JSON.stringify(product));
   }
+
+  addProduct(ad: any) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    }
+
+    return this._http.post(this.AD_API + '/add_advertisement', ad, httpOptions);
+    
+  }
+  
+  uploadProductPhoto(file: FormData,id:Number) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({ Authorization: 'Bearer ' + token })
+    };
+
+    return this._http.post(this.AD_API + '/update_advertisement_img/' + id, file, httpOptions);
+  }
 }
