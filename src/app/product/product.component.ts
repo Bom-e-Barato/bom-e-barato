@@ -19,10 +19,26 @@ export class ProductComponent implements OnInit {
   
   /* Open the page with the product details */
   open_product() {
-    if (this.data.link != '')
+    if (this.data.link != '') {
       window.location.href = this.data.link;
-    else
+    } else {
       this._service.openProductPage(this.data);
       this._router.navigate(['/product']);
+    }
+  }
+
+  getImage(data: any) {
+    if (data.marketplace == 'Bom e Barato') {
+      return 'http://localhost:4200/assets/img/' + data.img;
+    } else {
+      if (Array.from(data.img)[0] == 'h') {
+        return data.img;
+      } else {
+        if (data.marketplace == 'olx')
+          return 'http://localhost:4200/assets/img/olx.png';
+        else
+          return 'http://localhost:4200/assets/img/custojusto.png';
+      }
+    }
   }
 }

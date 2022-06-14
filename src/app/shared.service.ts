@@ -349,7 +349,7 @@ export class SharedService {
   }
 
   getProducts(filter: string, location: string) {
-    var handler_args: any = {search_term: filter, max_pages: 1}
+    var handler_args: any = {search_term: filter, max_pages: 1, marketplaces: ['Bom e Barato', 'olx']}
 
     if (location == '') {
       //return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
