@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SharedService } from '../shared.service';
 import  {map, startWith } from 'rxjs/operators';
 
@@ -17,15 +17,21 @@ export class SearchBarComponent implements OnInit {
   locationValue: string = '';
   form!: FormGroup;
   filteredOptions?: Observable<string[]>;
+  subscription: Subscription = new Subscription();
 
-  constructor(private _formBuilder: FormBuilder, private _router: Router, private _service: SharedService) { }
+  constructor(private _formBuilder: FormBuilder, private _router: Router, private _service: SharedService) {
+    this.subscription = this._service.filter.subscribe((data: any) => {
+      this.filterValue = data.filter;
+      this.locationValue = data.location;
+
+      this.form = this._formBuilder.group({
+        filter: [this.filterValue],
+        location: [this.locationValue]
+      }, {validator: locationValidator});
+    });    
+  }
 
   ngOnInit(): void {
-    this.form = this._formBuilder.group({
-      filter: [''],
-      location: ['']
-    }, {validator: locationValidator});
-
     this.filteredOptions = this.form.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value)),
@@ -60,11 +66,13 @@ export class SearchBarComponent implements OnInit {
 
   applyLocation() {
     this.locationValue = this.form.get('location')?.value;
+    this.filterValue = this.form.get('filter')?.value;
     this._service.setFilter(this.filterValue, this.locationValue);
   }
 
   applySearch() {
     this.filterValue = this.form.get('filter')?.value;
+    this.locationValue = this.form.get('location')?.value;
     this._service.setFilter(this.filterValue, this.locationValue);
 
     /* Route to the search page */
