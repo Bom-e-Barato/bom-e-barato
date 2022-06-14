@@ -6,7 +6,7 @@
     <div *ngIf="!loading">
         <div class="row align-items-center">
             <div class="col d-flex v-align">
-                <mat-icon color="accent">circle</mat-icon>&nbsp;&nbsp;<span>{{locationValue == '' ? 'Portugal' : locationValue}}</span>             
+                <mat-icon color="accent">circle</mat-icon>&nbsp;&nbsp;<span>{{locationValue == '' || locationValue == null ? 'Portugal' : locationValue}}</span>             
             </div>
 
             <div class="col d-flex v-align justify-content-end">

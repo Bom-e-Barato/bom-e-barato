@@ -35,6 +35,10 @@ export class AppComponent {
     const dialogRef = this.dialog.open(RegisterComponent);
   }
 
+  resetSearchBar() {
+    this._service.setFilter('', '');
+  }
+
   logout() {
     this._service.changeLogStatus(false);
     this._service.logout().subscribe((data: any) => {

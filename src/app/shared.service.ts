@@ -349,7 +349,14 @@ export class SharedService {
   }
 
   getProducts(filter: string, location: string) {
-    var handler_args: any = {search_term: filter, max_pages: 1, marketplaces: ['Bom e Barato', 'olx']}
+    if (location == null || location == undefined) location = '';
+
+    var handler_args: any = {
+      search_term: filter,
+      max_pages: 1,
+      marketplaces: ['Bom e Barato', 'olx', 'cj', 'ebay'],
+      location: location.toLocaleLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "")
+    };
 
     if (location == '') {
       //return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
@@ -362,8 +369,8 @@ export class SharedService {
     }
   }
 
-   /* Change the opened product page information */
-   openProductPage(product: product) {
+  /* Change the opened product page information */
+  openProductPage(product: product) {
     this.productSource.next(product);
     localStorage.setItem('product-page', JSON.stringify(product));
   }
