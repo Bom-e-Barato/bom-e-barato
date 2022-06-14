@@ -58,6 +58,7 @@ export class SharedService {
 
   readonly AD_API = 'http://127.0.0.1:8000/advertisement/api';
   readonly ACCOUNT_API = 'http://127.0.0.1:8000/account/api';
+  readonly CONVERSATION_API = 'http://127.0.0.1:8000/conversation/api'
 
   products : product[] = [
     {
@@ -288,6 +289,19 @@ export class SharedService {
     return this._http.post(this.ACCOUNT_API + '/login', credentials);
   }
 
+  /* Get credentials from authenticated user */
+  getCredentials() {
+    var token : any = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+
+    return this._http.get(this.ACCOUNT_API + '/user', httpOptions);
+  }
+
   /* Logout with account response */
   logout() {
     var token: any = localStorage.getItem('token');
@@ -362,9 +376,33 @@ export class SharedService {
     }
   }
 
-   /* Change the opened product page information */
-   openProductPage(product: product) {
+  /* Change the opened product page information */
+  openProductPage(product: product) {
     this.productSource.next(product);
     localStorage.setItem('product-page', JSON.stringify(product));
   }
+
+  /* Add message */
+  addMessage(receiver_id : number, msg : string) {
+    var token: any = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this._http.post(this.CONVERSATION_API + '/add_message/' + receiver_id, msg, httpOptions);
+  }
+
+  getConversation(receiver_id : number, sender_id : number) {
+    var token: any = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this._http.post(this.CONVERSATION_API + '/conversation_with/' + receiver_id, sender_id, httpOptions);
+  }
+
 }

@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container matColumnDef="name">
@@ -41,6 +41,49 @@
                 </mat-form-field>
                 <button mat-button class='button' color="primary">Enviar</button>
             </form>
+        </mat-card>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-2">
+        <mat-card>
+            <div *ngFor="let user of users">
+                <mat-card (click)="openChat(user)">
+                    {{user}}
+                </mat-card>
+            </div>
+        </mat-card>
+    </div>
+    <div class="col">
+        <mat-card>
+            <h1>{{title}}</h1>
+            <!-- <div class="chat">
+
+                <div class="message is-sent" *ngFor="let m of messages_sent">
+                    <p><b>{{m.sender}}: </b>{{m.text}}</p>
+                </div>
+                <div class="message is-received" *ngFor="let m of messages_received">
+                </div>
+            </div> -->
+            
+            <div class="chat">
+                <div *ngFor="let m of messages_sent">
+                    <div *ngIf="loggedin_username==m.sender" class="message is-sent">
+                        <p><b>{{m.sender}}: </b>{{m.text}}</p>
+                    </div>
+                    <div *ngIf="!(loggedin_username==m.sender)" class="message is-received">
+                        <p><b>{{m.sender}}: </b>{{m.text}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <mat-form-field appearance="outline">
+                <input matInput type="text" >
+                <button matSuffix mat-icon-button (click)="sendMessage()">
+                    <mat-icon>send</mat-icon>
+                </button>
+            </mat-form-field>
         </mat-card>
     </div>
 </div>
