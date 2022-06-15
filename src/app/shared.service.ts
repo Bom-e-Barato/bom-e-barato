@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 export interface product {
+  id: number,
   marketplace: string;
   name: string;
   price: number;
@@ -11,7 +12,7 @@ export interface product {
   description: string;
   promoted: boolean;
   negotiable: boolean;
-  id_seller?: number;
+  seller?: number;
   category?: string;
   location?: string;
 }
@@ -33,7 +34,8 @@ export interface person {
 export interface account_response {
   v: boolean,
   m: string,
-  t?: string
+  t?: string,
+  id?: number
 }
 
 @Injectable({
@@ -61,6 +63,7 @@ export class SharedService {
 
   products : product[] = [
     {
+      id: 0,
       marketplace: "OLX",
       name: "Asus ROG Strix RTX 3060 Ti",
       price: 775,
@@ -71,6 +74,7 @@ export class SharedService {
       negotiable: false
     },
     {
+      id: 0,
       marketplace: "OLX",
       name: "Zotac RTX 3060 Ti 8GB",
       price: 650,
@@ -81,6 +85,7 @@ export class SharedService {
       negotiable: false
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "MSI RTX 3060 Ti 8GB",
       price: 800,
@@ -93,6 +98,7 @@ export class SharedService {
       location: 'Aveiro'
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "MSI RTX 3060 6GB",
       price: 580,
@@ -105,6 +111,7 @@ export class SharedService {
       location: 'Braga'
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "AMD RX6900 XT",
       price: 700,
@@ -117,6 +124,7 @@ export class SharedService {
       location: 'Bragança'
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Bola Mundial 2022",
       price: 25,
@@ -129,6 +137,7 @@ export class SharedService {
       location: "Aveiro"
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Camisola do CR7",
       price: 28,
@@ -141,6 +150,7 @@ export class SharedService {
       location: "Leiria"
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Chinelos de dedo Havaianas",
       price:20,
@@ -153,6 +163,7 @@ export class SharedService {
       location: "Aveiro",
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Comando Ps4",
       price: 40,
@@ -165,6 +176,7 @@ export class SharedService {
       location: "Braga",
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Comando Xbox One",
       price: 40,
@@ -177,6 +189,7 @@ export class SharedService {
       location: "Porto",
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Conjunto de cama",
       price: 20,
@@ -189,6 +202,7 @@ export class SharedService {
       location: "Aveiro",
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name:"Mochila Eastpack",
       price: 35,
@@ -201,6 +215,7 @@ export class SharedService {
       location: "Coimbra",
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Cadeira Gaming",
       price: 170,
@@ -213,6 +228,7 @@ export class SharedService {
       location: "Porto",
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Par de patins",
       price: 40,
@@ -225,6 +241,7 @@ export class SharedService {
       location: "Aveiro",
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Tenda",
       price: 50,
@@ -237,6 +254,7 @@ export class SharedService {
       location: "Braga",
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Máquina de lavar roupa",
       price: 260,
@@ -249,6 +267,7 @@ export class SharedService {
       location: "Porto",
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Berbequim",
       price: 50,
@@ -261,6 +280,7 @@ export class SharedService {
       location: "Guarda",
     },
     {
+      id: 0,
       marketplace: "Bom e Barato",
       name: "Filme do Bruno Aleixo",
       price: 10,
@@ -301,6 +321,7 @@ export class SharedService {
 
     /* Remove the token from local storage */
     localStorage.removeItem('token');
+    localStorage.removeItem('id');
     return this._http.post(this.ACCOUNT_API + '/logout', token, httpOptions);
   }
 
@@ -308,7 +329,6 @@ export class SharedService {
   register(person: person) {
     return this._http.post(this.ACCOUNT_API + '/register', person);
   }
-
 
   /* Change the filter value */
   setFilter(filter: string, location: string) {
@@ -346,7 +366,6 @@ export class SharedService {
   /* Get all the products */
   getPromotedProducts() {
     return this._http.get(this.AD_API + '/get_promoted_ads');
-    //return this.products.filter((p: product) => p.promoted == true);
   }
 
   getProducts(filter: string, location: string) {
@@ -402,5 +421,18 @@ export class SharedService {
     }
 
     return this._http.get(this.AD_API + '/get_ad/' + id, httpOptions);
+  }
+
+  deleteAd(id: Number) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    }
+
+    return this._http.delete(this.AD_API + '/delete_advertisement/' + id, httpOptions);
   }
 }
