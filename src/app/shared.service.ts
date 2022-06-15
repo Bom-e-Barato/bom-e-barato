@@ -345,7 +345,8 @@ export class SharedService {
 
   /* Get all the products */
   getPromotedProducts() {
-    return this.products.filter((p: product) => p.promoted == true);
+    return this._http.get(this.AD_API + '/get_promoted_ads');
+    //return this.products.filter((p: product) => p.promoted == true);
   }
 
   getProducts(filter: string, location: string) {
@@ -358,15 +359,7 @@ export class SharedService {
       location: location.toLocaleLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "")
     };
 
-    if (location == '') {
-      //return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
-      return this._http.post(this.AD_API + '/get_all_ads', handler_args);
-    } else {
-      // return this.products.filter((product: product) => 
-      //   product.name.toLowerCase().includes(filter.toLowerCase()) && product.location! == location
-      // );
-      return this._http.post(this.AD_API + '/get_all_ads', handler_args);
-    }
+    return this._http.post(this.AD_API + '/get_all_ads', handler_args);
   }
 
   /* Change the opened product page information */
@@ -386,10 +379,9 @@ export class SharedService {
     }
 
     return this._http.post(this.AD_API + '/add_advertisement', ad, httpOptions);
-    
   }
   
-  uploadProductPhoto(file: FormData,id:Number) {
+  uploadProductPhoto(file: FormData, id: Number) {
     var token = localStorage.getItem('token');
 
     const httpOptions = {
@@ -397,5 +389,18 @@ export class SharedService {
     };
 
     return this._http.post(this.AD_API + '/update_advertisement_img/' + id, file, httpOptions);
+  }
+
+  getProductInfo(id: Number) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    }
+
+    return this._http.get(this.AD_API + '/get_ad/' + id, httpOptions);
   }
 }

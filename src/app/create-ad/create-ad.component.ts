@@ -5,6 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SharedService } from '../shared.service';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-ad',
@@ -12,15 +13,15 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
   styleUrls: ['./create-ad.component.scss']
 })
 export class CreateAdComponent implements OnInit {
-  form!:FormGroup;
+  form!: FormGroup;
   imageChangedEvent: any = '';
   croppedImage: any = '';
   districts: string[] = ['Aveiro', 'Beja', 'Braga', 'Bragança', 'Castelo Branco', 'Coimbra', 'Évora', 'Faro', 'Guarda', 'Leiria', 'Lisboa', 'Portalegre', 'Porto', 'Santarém', 'Setúbal', 'Castelo', 'Vila Real', 'Viseu'];
-  categories:string[] = ['Automóveis','Ferramentas','Roupa','Imoveis', 'Eletrodomésticos', 'Eletrônicos', 'Desporto', 'Informática', 'Moda', 'Móveis', 'Outros'];
+  categories: string[] = ['Automóveis','Ferramentas','Roupa','Imoveis', 'Eletrodomésticos', 'Eletrônicos', 'Desporto', 'Informática', 'Moda', 'Móveis', 'Outros'];
   filteredOptions?: Observable<string[]>;
   filteredOptions2?: Observable<string[]>;
 
-  constructor(private _formbuilder: FormBuilder,private _router:Router,private _service:SharedService) { }
+  constructor(private _formbuilder: FormBuilder, private _router:Router,private _service:SharedService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.form = this._formbuilder.group({
@@ -28,9 +29,9 @@ export class CreateAdComponent implements OnInit {
       preço: new FormControl('', [Validators.required,Validators.min(0),Validators.pattern('^[0-9,]*$')]),
       titulo: new FormControl('', [Validators.required],),
       imagem: new FormControl('', [Validators.required]),
-      negociavel: new FormControl('', ), 
+      negociavel: new FormControl(false), 
       descriçao: new FormControl('', [Validators.required]),
-      promover: new FormControl('', ),
+      promover: new FormControl(false),
       categoria: new FormControl('', [Validators.required]),   
     },{validator: [locationValidator,categoryValidator]});
     
@@ -46,13 +47,10 @@ export class CreateAdComponent implements OnInit {
   }
 
   submit() {
-
     var ad = {
-      
       name: this.form.value.titulo,
-      img: "",
+      img: null,
       price: this.form.value.preço,
-      // link: "",
       description: this.form.value.descriçao,
       promoted: this.form.value.promover,
       negotiable: this.form.value.negociavel,
@@ -61,42 +59,31 @@ export class CreateAdComponent implements OnInit {
     }
 
     this._service.addProduct(ad).subscribe((data: any) => {
-      // if (data.v == true) {
-        // var img = this.uploadPhoto();
-        var img = this.form.value.imagem;
+      if (data.v == true) {
+        var img = this.uploadPhoto();
+        var id = data.m;
 
         if (img != null) {
           this._service.uploadProductPhoto(img, Number(data.m)).subscribe((data: any) => {
-            // if (data.v == true) {
-              /* Close the dialog */
-              // this.dialogRef.close();
+            if (data.v == true) {
+              this._snackBar.open('Produto anunciado!', 'Fechar', { "duration": 2500 });
+            } else {
+              this._snackBar.open('Erro ao anunciar produto!', 'Fechar', { "duration": 2500 });
+            }
 
-              /* Reload the my_exercises component */
-              let currentUrl = this._router.url;
-              this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-                  this._router.navigate([currentUrl]);
-              });
-              
-              console.log('adicionado');
-              // this._snackBar.open('Exercício adicionado!', 'Fechar', { "duration": 2500 });
-            // }
+            this._service.getProductInfo(Number(id)).subscribe((data: any) => {
+              console.log(data);
+              this._service.openProductPage(data);
+              this._router.navigate(['/product']);
+            });
           });
         }
 
-        /* Close the dialog */
-        // this.dialogRef.close();
-
-        /* Reload the my_exercises component */
-        let currentUrl = this._router.url;
-        this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-            this._router.navigate([currentUrl]);
-        });
-        
-        // this._snackBar.open('Exercício adicionado!', 'Fechar', { "duration": 2500 });
-      // }
+        this._snackBar.open('Produto anunciado!', 'Fechar', { "duration": 2500 });
+      } else {
+        this._snackBar.open('Erro ao anunciar produto!', 'Fechar', { "duration": 2500 });
+      }
     });  
-    console.log(this.form.value);
-    this._router.navigate(['/home']);
   }
 
   get local() { return this.form.get('local') };
@@ -187,12 +174,6 @@ export class CreateAdComponent implements OnInit {
     const filterValue2 = value?.categoria?.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "")
 
     return this.categories.filter(option => option.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(filterValue2));
-  }
-
-  applyLocation() {
-  }
-
-  applyCategory() {
   }
 
   clear() {

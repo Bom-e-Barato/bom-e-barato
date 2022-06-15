@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {NgxGalleryComponent, NgxGalleryOptions} from '@kolkov/ngx-gallery';
@@ -41,9 +41,11 @@ export class ShowProductComponent implements OnInit {
     });
   }
 
-
   ngOnInit(): void {
-    this.products = this._service.getPromotedProducts();
+    this._service.getPromotedProducts().subscribe((data: any) => {
+      this.products = data as product[];
+    });
+    //this.products = this._service.getPromotedProducts();
 
     this.galleryOptions = [
       {
@@ -71,24 +73,24 @@ export class ShowProductComponent implements OnInit {
 
     this.galleryImages = [
       {
-        small: 'http://localhost:4200/assets/img/' + this.product.img,
-        medium: 'http://localhost:4200/assets/img/' + this.product.img,
-        big: 'http://localhost:4200/assets/img/' + this.product.img
+        small: 'http://localhost:8000' + this.product.img,
+        medium: 'http://localhost:8000' + this.product.img,
+        big: 'http://localhost:8000' + this.product.img
       },
       {
-        small: 'http://localhost:4200/assets/img/' + this.product.img,
-        medium: 'http://localhost:4200/assets/img/' + this.product.img,
-        big: 'http://localhost:4200/assets/img/' + this.product.img
+        small: 'http://localhost:8000' + this.product.img,
+        medium: 'http://localhost:8000' + this.product.img,
+        big: 'http://localhost:8000' + this.product.img
       },
       {
-        small: 'http://localhost:4200/assets/img/' + this.product.img,
-        medium: 'http://localhost:4200/assets/img/' + this.product.img,
-        big: 'http://localhost:4200/assets/img/' + this.product.img
+        small: 'http://localhost:8000' + this.product.img,
+        medium: 'http://localhost:8000' + this.product.img,
+        big: 'http://localhost:8000' + this.product.img
       },      
       {
-        small: 'http://localhost:4200/assets/img/' + this.product.img,
-        medium: 'http://localhost:4200/assets/img/' + this.product.img,
-        big: 'http://localhost:4200/assets/img/' + this.product.img
+        small: 'http://localhost:8000' + this.product.img,
+        medium: 'http://localhost:8000' + this.product.img,
+        big: 'http://localhost:8000' + this.product.img
       }      
     ];
   }
@@ -111,5 +113,4 @@ export class ShowProductComponent implements OnInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-
 }
