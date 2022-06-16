@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators,  ValidationErrors, ValidatorFn, Abs
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { SharedService } from '../shared.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-create-ad',
@@ -11,12 +13,14 @@ import { Router } from '@angular/router';
 })
 export class CreateAdComponent implements OnInit {
   form!:FormGroup;
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
   districts: string[] = ['Aveiro', 'Beja', 'Braga', 'Bragança', 'Castelo Branco', 'Coimbra', 'Évora', 'Faro', 'Guarda', 'Leiria', 'Lisboa', 'Portalegre', 'Porto', 'Santarém', 'Setúbal', 'Castelo', 'Vila Real', 'Viseu'];
   categories:string[] = ['Automóveis','Ferramentas','Roupa','Imoveis', 'Eletrodomésticos', 'Eletrônicos', 'Desporto', 'Informática', 'Moda', 'Móveis', 'Outros'];
   filteredOptions?: Observable<string[]>;
   filteredOptions2?: Observable<string[]>;
 
-  constructor(private _formbuilder: FormBuilder,private _router:Router) { }
+  constructor(private _formbuilder: FormBuilder,private _router:Router,private _service:SharedService) { }
 
   ngOnInit(): void {
     this.form = this._formbuilder.group({
@@ -42,6 +46,55 @@ export class CreateAdComponent implements OnInit {
   }
 
   submit() {
+
+    var ad = {
+      
+      name: this.form.value.titulo,
+      img: "",
+      price: this.form.value.preço,
+      // link: "",
+      description: this.form.value.descriçao,
+      promoted: this.form.value.promover,
+      negotiable: this.form.value.negociavel,
+      category: this.form.value.categoria,
+      location: this.form.value.local
+    }
+
+    this._service.addProduct(ad).subscribe((data: any) => {
+      // if (data.v == true) {
+        // var img = this.uploadPhoto();
+        var img = this.form.value.imagem;
+
+        if (img != null) {
+          this._service.uploadProductPhoto(img, Number(data.m)).subscribe((data: any) => {
+            // if (data.v == true) {
+              /* Close the dialog */
+              // this.dialogRef.close();
+
+              /* Reload the my_exercises component */
+              let currentUrl = this._router.url;
+              this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+                  this._router.navigate([currentUrl]);
+              });
+              
+              console.log('adicionado');
+              // this._snackBar.open('Exercício adicionado!', 'Fechar', { "duration": 2500 });
+            // }
+          });
+        }
+
+        /* Close the dialog */
+        // this.dialogRef.close();
+
+        /* Reload the my_exercises component */
+        let currentUrl = this._router.url;
+        this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this._router.navigate([currentUrl]);
+        });
+        
+        // this._snackBar.open('Exercício adicionado!', 'Fechar', { "duration": 2500 });
+      // }
+    });  
     console.log(this.form.value);
     this._router.navigate(['/home']);
   }
@@ -50,6 +103,55 @@ export class CreateAdComponent implements OnInit {
   get categoria() { return this.form.get('categoria') };
   get titulo() { return this.form.get('titulo') };
   get preco() { return this.form.get('preço') };
+
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+
+   /* Transform the base64 to a blob */
+   convertDataUrlToBlob(dataUrl:any): Blob {
+    const arr = dataUrl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new Blob([u8arr], {type: mime});
+  }
+
+  /* Upload the user's photo */
+  uploadPhoto() {
+    if (this.croppedImage != "") {
+      var photo;
+
+      if (this.imageChangedEvent == "") {
+        return null;
+      } else {
+        photo = this.imageChangedEvent.target.files[0].name;
+      }
+
+      var arr: string[] = photo.split('.');
+      var ext: string = arr[arr.length - 1];
+      var name: string = photo;
+
+      const file = new File([this.convertDataUrlToBlob(this.croppedImage)], name, {type: 'image/' + ext});
+      
+      const formData: FormData = new FormData();
+      formData.append('img', file, file.name);
+
+      return formData;
+    }
+
+    return null;
+  }
 
   onLocationInput() {
     if (this.form.hasError('locationWrong')) {

@@ -37,7 +37,7 @@ export class ShowProductComponent implements OnInit {
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private _service: SharedService) {
     this.subscription = this._service.productOpened.subscribe((data: product) => {
-      this.product = data;
+      this.product = data;      
     });
   }
 

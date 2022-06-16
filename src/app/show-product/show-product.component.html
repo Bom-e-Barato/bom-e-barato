@@ -63,7 +63,7 @@
                 {{product.description}}</p>
                 <br>
             </mat-card-content>
-            <button mat-stroked-button color="primary" routerLink="/chat" class="cont_btn">Contactar vendedor</button>
+            <button mat-stroked-button color="primary" routerLink="/chat" [queryParams]="{id : this.product.id_seller}" class="cont_btn">Contactar vendedor</button>
         </mat-card>
     </div>
 </div>

@@ -50,7 +50,7 @@
         <mat-card>
             <div *ngFor="let user of users">
                 <mat-card (click)="openChat(user)">
-                    {{user}}
+                    {{user.name}}
                 </mat-card>
             </div>
         </mat-card>
@@ -69,17 +69,17 @@
             
             <div class="chat">
                 <div *ngFor="let m of messages_sent">
-                    <div *ngIf="loggedin_username==m.sender" class="message is-sent">
+                    <div *ngIf="logged_user_id==m.sender" class="message is-sent">
                         <p><b>{{m.sender}}: </b>{{m.text}}</p>
                     </div>
-                    <div *ngIf="!(loggedin_username==m.sender)" class="message is-received">
+                    <div *ngIf="!(logged_user_id==m.sender)" class="message is-received">
                         <p><b>{{m.sender}}: </b>{{m.text}}</p>
                     </div>
                 </div>
             </div>
 
             <mat-form-field appearance="outline">
-                <input matInput type="text" >
+                <input matInput type="text" [(ngModel)]="content">
                 <button matSuffix mat-icon-button (click)="sendMessage()">
                     <mat-icon>send</mat-icon>
                 </button>

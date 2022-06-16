@@ -69,7 +69,8 @@ export class SharedService {
       img: "nvidia-card.jpg",
       description: "",
       promoted: false,
-      negotiable: false
+      negotiable: false,
+      id_seller: 1
     },
     {
       marketplace: "OLX",
@@ -79,7 +80,8 @@ export class SharedService {
       img: "nvidia-card.jpg",
       description: "",
       promoted: false,
-      negotiable: false
+      negotiable: false,
+      id_seller: 1
     },
     {
       marketplace: "Bom e Barato",
@@ -91,7 +93,8 @@ export class SharedService {
       promoted: false,
       negotiable: false,
       category: 'Tecnologia',
-      location: 'Aveiro'
+      location: 'Aveiro',
+      id_seller: 2
     },
     {
       marketplace: "Bom e Barato",
@@ -103,7 +106,8 @@ export class SharedService {
       promoted: false,
       negotiable: true,
       category: 'Tecnologia',
-      location: 'Braga'
+      location: 'Braga',
+      id_seller: 2
     },
     {
       marketplace: "Bom e Barato",
@@ -115,7 +119,8 @@ export class SharedService {
       promoted: true,
       negotiable: false,
       category: 'Tecnologia',
-      location: 'Bragança'
+      location: 'Bragança',
+      id_seller: 3
     },
     {
       marketplace: "Bom e Barato",
@@ -127,7 +132,8 @@ export class SharedService {
       promoted: false,
       negotiable: true,
       category: "Desporto",
-      location: "Aveiro"
+      location: "Aveiro",
+      id_seller: 4
     },
     {
       marketplace: "Bom e Barato",
@@ -139,7 +145,8 @@ export class SharedService {
       promoted: true,
       negotiable: false,
       category: "Desporto",
-      location: "Leiria"
+      location: "Leiria",
+      id_seller: 2
     },
     {
       marketplace: "Bom e Barato",
@@ -152,6 +159,7 @@ export class SharedService {
       negotiable: true,
       category: "Moda",
       location: "Aveiro",
+      id_seller: 5
     },
     {
       marketplace: "Bom e Barato",
@@ -164,6 +172,7 @@ export class SharedService {
       negotiable: true,
       category: "Tecnologia",
       location: "Braga",
+      id_seller: 6
     },
     {
       marketplace: "Bom e Barato",
@@ -176,6 +185,7 @@ export class SharedService {
       negotiable: false,
       category: "Tecnologia",
       location: "Porto",
+      id_seller: 6
     },
     {
       marketplace: "Bom e Barato",
@@ -188,6 +198,7 @@ export class SharedService {
       negotiable: true,
       category: "Moda",
       location: "Aveiro",
+      id_seller: 7
     },
     {
       marketplace: "Bom e Barato",
@@ -200,6 +211,7 @@ export class SharedService {
       negotiable: false,
       category: "Moda",
       location: "Coimbra",
+      id_seller: 8
     },
     {
       marketplace: "Bom e Barato",
@@ -212,6 +224,7 @@ export class SharedService {
       negotiable: true,
       category: "Tecnologia",
       location: "Porto",
+      id_seller: 9
     },
     {
       marketplace: "Bom e Barato",
@@ -224,6 +237,7 @@ export class SharedService {
       negotiable: false,
       category: "Desporto",
       location: "Aveiro",
+      id_seller: 10
     },
     {
       marketplace: "Bom e Barato",
@@ -236,6 +250,7 @@ export class SharedService {
       negotiable: true,
       category: "Outros",
       location: "Braga",
+      id_seller: 11
     },
     {
       marketplace: "Bom e Barato",
@@ -248,6 +263,7 @@ export class SharedService {
       negotiable: false,
       category: "Eletrodomésticos",
       location: "Porto",
+      id_seller: 12
     },
     {
       marketplace: "Bom e Barato",
@@ -260,6 +276,7 @@ export class SharedService {
       negotiable: true,
       category: "Ferramentas",
       location: "Guarda",
+      id_seller: 13
     },
     {
       marketplace: "Bom e Barato",
@@ -272,6 +289,7 @@ export class SharedService {
       negotiable: false,
       category: "Lazer",
       location: "Aveiro",
+      id_seller: 14
     },
 
   ];
@@ -363,16 +381,23 @@ export class SharedService {
   }
 
   getProducts(filter: string, location: string) {
-    var handler_args: any = {search_term: filter, max_pages: 1}
+    if (location == null || location == undefined) location = '';
+
+    var handler_args: any = {
+      search_term: filter,
+      max_pages: 1,
+      marketplaces: ['Bom e Barato', 'olx', 'cj', 'ebay'],
+      location: location.toLocaleLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "")
+    };
 
     if (location == '') {
-      return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
-      // return this._http.post(this.API + '/get_all_ads', handler_args);
+      //return this.products.filter((product: product) => product.name.toLowerCase().includes(filter.toLowerCase()));
+      return this._http.post(this.AD_API + '/get_all_ads', handler_args);
     } else {
-      return this.products.filter((product: product) => 
-        product.name.toLowerCase().includes(filter.toLowerCase()) && product.location! == location
-      );
-      // return this._http.post(this.API + '/get_all_ads', handler_args);
+      // return this.products.filter((product: product) => 
+      //   product.name.toLowerCase().includes(filter.toLowerCase()) && product.location! == location
+      // );
+      return this._http.post(this.AD_API + '/get_all_ads', handler_args);
     }
   }
 
@@ -382,27 +407,67 @@ export class SharedService {
     localStorage.setItem('product-page', JSON.stringify(product));
   }
 
-  /* Add message */
-  addMessage(receiver_id : number, msg : string) {
-    var token: any = localStorage.getItem('token');
+  addProduct(ad: any) {
+    var token = localStorage.getItem('token');
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         Authorization: 'Bearer ' + token
       })
+    }
+
+    return this._http.post(this.AD_API + '/add_advertisement', ad, httpOptions);
+    
+  }
+  
+  uploadProductPhoto(file: FormData,id:Number) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({ Authorization: 'Bearer ' + token })
     };
-    return this._http.post(this.CONVERSATION_API + '/add_message/' + receiver_id, msg, httpOptions);
+
+    return this._http.post(this.AD_API + '/update_advertisement_img/' + id, file, httpOptions);
   }
 
-  getConversation(receiver_id : number, sender_id : number) {
-    var token: any = localStorage.getItem('token');
+  addMessage(receiver_id : number, message : string) {
+    var token = localStorage.getItem('token');
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         Authorization: 'Bearer ' + token
       })
-    };
-    return this._http.post(this.CONVERSATION_API + '/conversation_with/' + receiver_id, sender_id, httpOptions);
+    }
+
+    return this._http.post(this.CONVERSATION_API + '/add_message/' + receiver_id, {message:message}, httpOptions);
+  }
+
+  getConversation(sender_id : number) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    }
+
+    return this._http.get(this.CONVERSATION_API + '/conversation_with/' + sender_id, httpOptions);
+  }
+
+  getMessages() {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    }
+
+    return this._http.get(this.CONVERSATION_API + '/get_messages', httpOptions);
   }
 
 }

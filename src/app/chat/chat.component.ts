@@ -1,23 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../shared.service';
 
 export interface chat {
   id : number;
-  sender : string;
-  receiver : string;
+  sender : number;
+  receiver : number;
   message : string;
 }
 
-const chat_data : chat[] = [
-  {id: 3, sender: "Hugo", receiver: "Ludvico", message: "Olá Ludvico"},
-  {id: 2, sender: "Ludvico", receiver: "Hugo", message: "Olé hugo"},
-  {id: 4, sender: "Zé", receiver: "Flávia", message: "Texto random"},
-  {id: 1, sender: "Hugo", receiver: "Ludvico", message: "Olé Oléééé"},
-  {id: 5, sender: "Flávia", receiver: "Zé", message: "mensagem"},
-  {id: 7, sender: "Flávia", receiver: "Hugo", message: "Olá"},
-  {id: 8, sender: "Zé", receiver: "Ludvico", message: "Hello"},
-  {id: 6, sender: "Hugo", receiver: "Zé", message: "Hey"},
-]
+
+/*
+-> Qd 'contactar vendedor'
+sender    =   user_logado
+receiver  =   vendedor(recebo id do outro componente)
+-> Qd 'Mensagens'
+receiver  =   user_logado
+sender    =   vendedores
+
+--- Como obter vendedores?
+1) getConversation(receiver=user_logado)
+*/
 
 
 @Component({
@@ -26,57 +29,108 @@ const chat_data : chat[] = [
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  
-  users : string[] = [];
+  chat_data : chat[] = []
+  users : any[] = [];
+  users_id : number[] = [];
   title : string = "";
   messages_sent : any[] = [];
   messages_received : any[] = [];
+  sender! : number;
+  seller_id! : number;
+  content : string = "";
+  logged_user_id! : number;
 
   // just for testing purposes
   loggedin_username : string = "";
 
-  constructor(
-    private _service : SharedService
-  ) { }
-
-
-  ngOnInit(): void {
-    this._service.getCredentials().subscribe((data:any) => {
-      if(data.v == true) {
-        this.loggedin_username = data.info.first_name;
-        this.users = ["Hugo", "Ludvico", "Zé", "Flávia"];
-        this.users.splice(this.users.indexOf(this.loggedin_username), 1);
-      } else {
-        console.error("Error while trying to get the username. ");        
-      }
-    });
+  constructor(private _service : SharedService, private _router : Router) {
+    this.loadPage(null);
   }
 
-  openChat(sender: string) {
-    this.title = sender;
+  ngOnInit(): void {
+  }
+
+  openChat(sender: any) {
+    this.title = sender.name;
     this.messages_sent = [];
-    this.messages_received = []; 
-
-    chat_data.forEach(element => {
-      if((element.sender == this.loggedin_username && element.receiver == sender) || (element.sender == sender && element.receiver == this.loggedin_username)) {
+    this.messages_received = [];
+    this.seller_id = sender.id;
+    console.log(this.chat_data);
+    console.log(this.seller_id)
+    
+    this.chat_data.forEach(element => {      
+      console.log('ha aqui algo')
+            
+      if((element.sender == this.logged_user_id && element.receiver == Number(this.seller_id)) || (element.sender == Number(this.seller_id) && element.receiver == this.logged_user_id)) {
         this.messages_sent.push({id: element.id, sender: element.sender, text: element.message});
-      }
-
-      if(element.sender == sender && element.receiver == this.loggedin_username) {
-        this.messages_received.push({sender: element.sender, text: element.message});
       }
     });
 
     this.messages_sent.sort( (a,b) => (a.id < b.id) ? 1 : -1 );
-    console.log(this.messages_sent);
-
   }
 
   sendMessage() {
-    console.log(this.title);
+    var receiver_id = this.seller_id; 
     
-    
-    // this._service.addMessage();
+    this._service.addMessage(receiver_id, this.content).subscribe((data:any) => {
+      if(data.v == true) {
+        console.log("Message sent");
+        this.refreshChat(receiver_id);
+      } else {
+        console.log(data);
+        
+        console.error("Error while trying to send the message. ");        
+      }
+    });
   }
 
+  refreshChat(chat_id : number) {
+    this._service.getConversation(chat_id).subscribe((data : any) => {
+      console.log(data);
+      data.forEach((element : any) => {
+        if(element.includes("sender:")) {
+          this.chat_data.push({id:this.chat_data.length+1, sender:this.logged_user_id, receiver: chat_id, message:element.split("sender:").pop()})
+        } else if(element.includes("receiver:")) {
+          this.chat_data.push({id: this.chat_data.length+1, sender: chat_id, receiver: this.logged_user_id, message: element.split("receiver:").pop()})
+        }
+      });
+
+      this.openChat(chat_id);
+    });
+  }
+
+  loadPage(chat_id : number | null) {
+    this._service.getCredentials().subscribe((data:any) => {
+      if(data.v == true) {        
+        this.loggedin_username = data.info.first_name;
+        this.logged_user_id = data.info.id;
+        
+        // Get all id and name for users with existing chat
+        this._service.getMessages().subscribe((data : any) => {
+          this.users = data;
+          
+          // Get all chat messages
+          this.chat_data = [];
+          this.users.forEach((element: any) => {
+            this._service.getConversation(element.id).subscribe((data : any) => {
+              console.log(data);
+              console.log(element.id)
+
+              data.forEach((element : any) => {
+                if(element.includes("sender:")) {
+                  this.chat_data.push({id:this.chat_data.length+1, sender:this.logged_user_id, receiver: element.id, message:element.split("sender:").pop()})
+                } else if(element.includes("receiver:")) {
+                  this.chat_data.push({id: this.chat_data.length+1, sender: element.id, receiver: this.logged_user_id, message: element.split("receiver:").pop()})
+                }
+              });
+            });
+
+          });          
+        });
+      } else {
+        console.error("Error while trying to get the username. ");
+        console.log(data);
+      }
+    });
+  }
 }
