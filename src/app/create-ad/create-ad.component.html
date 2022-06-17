@@ -1,30 +1,26 @@
 <form [formGroup]="form" (submit)="submit()" >
-
     <div class="row">
-        
         <div class="col-6">
-            <div class="row">
+            <div class="row my-1">
                 <mat-form-field  appearance="outline">
                     <mat-label>Título</mat-label> 
                     <input matInput style="width:100%" formControlName="titulo" placeholder="Título">
                     <mat-error *ngIf="titulo?.hasError('required')">Preencha um titulo</mat-error>
-
                 </mat-form-field> 
             </div>
 
-            <div class="row">
+            <div class="row my-1">
                 <mat-form-field appearance="outline" style="width: 50%;">
                     <mat-label>Preço(€)</mat-label> 
                     <input matInput style="width: 25%;" formControlName="preço" placeholder="Preço(€)">
                     <mat-error *ngIf="preco?.hasError('required')">Defina um preço</mat-error>
                     <mat-error *ngIf="preco?.invalid && !preco?.hasError('required')">Preço inválido</mat-error>
                 </mat-form-field>
-                <mat-checkbox id="Negiciavel" formControlName="negociavel">Negociavel</mat-checkbox>
             </div>
             
+            <mat-checkbox id="Negiciavel" formControlName="negociavel">Negociável</mat-checkbox>
+            
             <div class="row">
-
-
                 <mat-card>
                     <image-cropper
                         [ngStyle]="{'opacity': imageChangedEvent == '' ? '0' : '1'}"
@@ -50,11 +46,9 @@
             
             <div class="row">
                 <mat-form-field appearance="outline">
-                    <!-- <textarea matInput style="width:100%" formControlName="descricao" placeholder="Descrição"></textarea> -->
-                <mat-label>Distrito</mat-label>                
+                    <mat-label>Distrito</mat-label>                
 
-                <input type="text" matInput [matAutocomplete]="auto" (input)="onLocationInput()"
-                    (keydown.enter)="applyLocation()" formControlName="local" >
+                    <input type="text" matInput [matAutocomplete]="auto" (input)="onLocationInput()" formControlName="local">
                     <mat-icon matSuffix style="transform: scale(1.1);">pin_drop</mat-icon>
                     <mat-error *ngIf="local?.hasError('required')">Escolha um Distrito</mat-error>
                     <mat-error *ngIf="local?.invalid && !local?.hasError('required')">Distrito inválido</mat-error>
@@ -66,14 +60,13 @@
                     </mat-autocomplete>
                 </mat-form-field>
             </div>
-            <div class="row">
 
+            <div class="row">
                 <mat-form-field appearance="outline">
                     <!-- <textarea matInput style="width:100%" formControlName="descricao" placeholder="Descrição"></textarea> -->
                     <mat-label>Categoria</mat-label>                
 
-                    <input type="text" matInput [matAutocomplete]="auto2" (input)="onCategoryInput()"
-                        (keydown.enter)="applyCategory()" formControlName="categoria" >
+                    <input type="text" matInput [matAutocomplete]="auto2" (input)="onCategoryInput()" formControlName="categoria" >
                         <mat-icon matSuffix style="transform: scale(1.1);">category</mat-icon>
                         <mat-error *ngIf="categoria?.hasError('required')">Defina uma Categoria</mat-error>
                         <mat-error *ngIf="categoria?.invalid && !categoria?.hasError('required')">Categoria inválida</mat-error>
@@ -84,17 +77,14 @@
                             </mat-option>
                         </mat-autocomplete>
                 </mat-form-field>
-
             </div>
                 
-            <mat-checkbox  formControlName="promover">Promover</mat-checkbox>
+            <mat-checkbox formControlName="promover">Promover</mat-checkbox>
                 
             <div class="row mt-4 mb-1 mx-auto">
                 <button mat-raised-button color="accent" type="submit"  mat-button>Criar</button>
                 <button mat-raised-button color="accent" (click)="clear()" mat-button>Cancelar</button>
             </div>
-        
-            
         </div>
 
         <div class="col-4">
@@ -106,7 +96,7 @@
                     </button>
                     Descrição
                 </mat-card-title>
-                    <textarea matInput formControlName="descriçao" id="Texto" placeholder="Descrição"></textarea>
+                <textarea matInput formControlName="descriçao" id="Texto" placeholder="Descrição"></textarea>
             </mat-card>
         </div>
     </div> 

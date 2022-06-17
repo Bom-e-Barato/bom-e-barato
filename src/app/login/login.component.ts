@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
 
           /* Set the token and log status in the service */
           localStorage.setItem('token', data.t);
+          localStorage.setItem('id', data.id)
           this._service.changeLogStatus(true);
 
           /* Close the Dialog */

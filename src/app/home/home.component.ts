@@ -10,13 +10,15 @@ import { product, SharedService } from '../shared.service';
 })
 export class HomeComponent implements OnInit {
   categories: {name: string, icon: string}[];
-  promoted: product[];
+  promoted: product[] = [];
   filterValue!: {filter: string, location: string};
   subscription: Subscription = new Subscription();
 
   constructor(private _service: SharedService, private _router: Router) {
     this.categories = this._service.getCategories();
-    this.promoted = this._service.getPromotedProducts();
+    this._service.getPromotedProducts().subscribe((data: any) => {
+      this.promoted = data as product[];
+    });
   }
 
   ngOnInit(): void {
