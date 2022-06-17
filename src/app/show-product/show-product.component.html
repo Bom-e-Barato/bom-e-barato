@@ -63,7 +63,7 @@
                 {{product.description}}</p>
                 <br>
             </mat-card-content>            
-            <button *ngIf="!owner" mat-stroked-button color="primary" routerLink="/chat" class="cont_btn">Contactar vendedor</button>
+            <button *ngIf="!owner" mat-stroked-button color="primary" routerLink="/chat"  class="cont_btn">Contactar vendedor</button>
             <button *ngIf="owner" mat-stroked-button color="warn" (click)="deleteAd()" class="cont_btn">Eliminar Anúncio</button>
         </mat-card>
     </div>
