@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
     this.categories = this._service.getCategories();
     this._service.getPromotedProducts().subscribe((data: any) => {
       this.promoted = data as product[];
+      console.log(this.promoted)
     });
   }
 

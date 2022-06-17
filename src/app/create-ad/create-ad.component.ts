@@ -72,7 +72,6 @@ export class CreateAdComponent implements OnInit {
             }
 
             this._service.getProductInfo(Number(id)).subscribe((data: any) => {
-              console.log(data);
               this._service.openProductPage(data);
               this._router.navigate(['/product']);
             });
