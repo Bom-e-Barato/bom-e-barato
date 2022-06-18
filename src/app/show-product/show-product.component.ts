@@ -10,6 +10,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { SendMessageComponent } from './send-message/send-message.component';
 
 const ELEMENT_DATA: product[] = [
   {id: 0, marketplace: "OLX", name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6", price:749, link:"https://olx.pt", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},  
@@ -38,7 +40,7 @@ export class ShowProductComponent implements OnInit {
   galleryOptions!: NgxGalleryOptions[];
   galleryImages!: NgxGalleryImage[];
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private _service: SharedService, private _snackBar: MatSnackBar, private _router: Router) {
+  constructor(private _liveAnnouncer: LiveAnnouncer, private _service: SharedService, private _snackBar: MatSnackBar, private _router: Router, public dialog : MatDialog) {
     this.subscription = this._service.productOpened.subscribe((data: product) => {
       this.product = data;
 
@@ -49,6 +51,7 @@ export class ShowProductComponent implements OnInit {
   ngOnInit(): void {
     this._service.getPromotedProducts().subscribe((data: any) => {
       this.products = data as product[];
+      
     });
     //this.products = this._service.getPromotedProducts();
 
@@ -131,4 +134,13 @@ export class ShowProductComponent implements OnInit {
       }
     });
   }
+
+  openDialog() {
+    this.dialog.open(SendMessageComponent, {
+      data: {
+        id: this.product.seller,
+      },
+    });
+  }
+
 }

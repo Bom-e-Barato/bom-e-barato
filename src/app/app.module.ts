@@ -38,6 +38,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { SendMessageComponent } from './show-product/send-message/send-message.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     SearchComponent,
     ProductComponent,
     ChatComponent,
-    CategoryComponent
+    CategoryComponent,
+    SendMessageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,7 @@
+<div>
+    SEND MESSAGE TO: {{this.data.id}}
+</div>
+<div>
+    <input mat-input type="text" [(ngModel)]="content">
+    <button mat-button (click)="sendMessage()"><mat-icon>send</mat-icon></button>
+</div>
