@@ -3,8 +3,11 @@
         <div class="row">
             <ngx-gallery #gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
         </div>
-        <div class="row">
-            <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+        <div *ngIf="loading" class="my-auto">
+            <mat-spinner class="mx-auto"></mat-spinner>
+        </div>
+        <div class="row" *ngIf="!loading">
+            <table mat-table  [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
                 class="mat-elevation-z8">
     
             <ng-container matColumnDef="marketplace">
@@ -45,7 +48,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
-    <mat-paginator [pageSizeOptions]="[2, 5, 10]" aria-label="Select page of users"></mat-paginator>
+    <mat-paginator *ngIf="!loading" [pageSizeOptions]="[2, 5, 10]" aria-label="Select page of users"></mat-paginator>
     </div>
     <div class="col">
         <mat-card class="prod-info">

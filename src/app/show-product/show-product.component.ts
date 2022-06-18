@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxGalleryComponent, NgxGalleryOptions } from '@kolkov/ngx-gallery';
@@ -27,23 +27,41 @@ const ELEMENT_DATA: product[] = [
 })
 export class ShowProductComponent implements OnInit {
   products: product[] = [];
+  products2: product[] = [];
   product!: product;
   subscription: Subscription = new Subscription();
   owner: boolean = false;
+  loading: boolean = true;
+  page:boolean = false;
 
   displayedColumns: string[] = ["marketplace", "name", "price", "link"];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource(this.products2);
   
+    
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('gallery') gallery!: NgxGalleryComponent;
   galleryOptions!: NgxGalleryOptions[];
   galleryImages!: NgxGalleryImage[];
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private _service: SharedService, private _snackBar: MatSnackBar, private _router: Router, public dialog : MatDialog) {
+  constructor(private ref: ChangeDetectorRef,private _liveAnnouncer: LiveAnnouncer, private _service: SharedService, private _snackBar: MatSnackBar, private _router: Router, public dialog : MatDialog) {
     this.subscription = this._service.productOpened.subscribe((data: product) => {
       this.product = data;
-
+      console.log(this.product.name);
+      this._service.getProducts(this.product.name,'').subscribe((data: any) => {
+        console.log(data);
+        this.selectProducts(data);
+        console.log(this.products2);
+        this.dataSource = new MatTableDataSource(this.products2);
+        
+        this.loading = false;
+        ref.detectChanges();
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.page = true;
+        
+        
+      });
       if (this.product.seller == Number(localStorage.getItem('id'))) this.owner = true;
     });
   }
@@ -54,6 +72,7 @@ export class ShowProductComponent implements OnInit {
       
     });
     //this.products = this._service.getPromotedProducts();
+   
 
     this.galleryOptions = [
       {
@@ -105,8 +124,21 @@ export class ShowProductComponent implements OnInit {
 
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    
+  }
+
+  selectProducts(product: product []) {
+    //get 1 product from each marketplace
+    var marketplace = ["OLX", "Kuantokusta", "eBay","Custo Justo"];
+    for (var i = 0; i < marketplace.length; i++) {
+      for (var j = 0; j < product.length; j++) {
+        if (product[j].marketplace == marketplace[i]) {
+          this.products2.push(product[j]);
+          console.log(marketplace[i]);
+          break;
+        }
+      }
+    }
   }
 
   /** Announce the change in sort state for assistive technology. */
