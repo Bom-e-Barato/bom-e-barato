@@ -1,0 +1,14 @@
+#pub{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+#img{
+    width: 15%;
+    height: max-content;
+    object-fit: cover;
+    margin: 0;
+}

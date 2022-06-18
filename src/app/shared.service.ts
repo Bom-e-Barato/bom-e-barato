@@ -58,6 +58,10 @@ export class SharedService {
   private productSource = new BehaviorSubject<product>(JSON.parse(localStorage.getItem('product-page')!));
   productOpened = this.productSource.asObservable();
 
+   /* Initialize the cart_details information */
+   private cartSource = new BehaviorSubject<any>(localStorage.getItem('cart-page') ? JSON.parse('[]') : JSON.parse(localStorage.getItem('cart-page')!));
+   cartOpened = this.cartSource.asObservable();
+
   readonly AD_API = 'http://127.0.0.1:8000/advertisement/api';
   readonly ACCOUNT_API = 'http://127.0.0.1:8000/account/api';
   readonly CONVERSATION_API = 'http://127.0.0.1:8000/conversation/api'
@@ -415,7 +419,7 @@ export class SharedService {
     var handler_args: any = {
       search_term: filter,
       max_pages: 1,
-      marketplaces: ['Bom e Barato', 'olx', 'cj', 'ebay'],
+      marketplaces: ['Bom e Barato', 'olx', 'cj', 'ebay', 'kk'],
       location: location.toLocaleLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "")
     };
 
@@ -492,7 +496,6 @@ export class SharedService {
     return this._http.get(this.CONVERSATION_API + '/conversation_with/' + sender_id, httpOptions);
   }
 
-
   deleteAd(id: Number) {
     var token = localStorage.getItem('token');
 
@@ -506,7 +509,7 @@ export class SharedService {
     return this._http.delete(this.AD_API + '/delete_advertisement/' + id, httpOptions);
   }
 
-  getMessages() {    
+  getMessages() {
     var token = localStorage.getItem('token');
 
     const httpOptions = {
@@ -519,4 +522,19 @@ export class SharedService {
     return this._http.get(this.CONVERSATION_API + '/get_messages', httpOptions);
   }
 
+  /* Change the opened cart page information */
+  openCartPage(cart: any) {
+    if (cart == null) {
+      this.cartSource.next([]);
+      localStorage.setItem('cart-page', JSON.stringify([]));
+    } else {
+      var new_cart = JSON.parse(localStorage.getItem('cart-page')!) == null ? [] : JSON.parse(localStorage.getItem('cart-page')!);
+      console.log(new_cart);
+
+      new_cart.push(cart);
+
+      this.cartSource.next(new_cart);
+      localStorage.setItem('cart-page', JSON.stringify(new_cart));
+    }
+  }
 }

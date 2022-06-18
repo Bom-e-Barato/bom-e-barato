@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { ShowProductComponent } from './show-product/show-product.component';
 import { SearchComponent } from './search/search.component';
 import { ChatComponent } from './chat/chat.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   { path: 'product', component: ShowProductComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'ad', component: CreateAdComponent },
   { path: 'search', component: SearchComponent },
   { path: 'chat', component: ChatComponent },
+  { path: 'checkout', component: CheckoutComponent },
   { path: '',   redirectTo: '/home', pathMatch: 'full' },   /* Default routing to HomeComponent */
 
 ];

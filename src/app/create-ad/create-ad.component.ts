@@ -58,31 +58,52 @@ export class CreateAdComponent implements OnInit {
       location: this.form.value.local
     }
 
-    this._service.addProduct(ad).subscribe((data: any) => {
-      if (data.v == true) {
-        var img = this.uploadPhoto();
-        var id = data.m;
-
-        if (img != null) {
-          this._service.uploadProductPhoto(img, Number(data.m)).subscribe((data: any) => {
-            if (data.v == true) {
-              this._snackBar.open('Produto anunciado!', 'Fechar', { "duration": 2500 });
-            } else {
-              this._snackBar.open('Erro ao anunciar produto!', 'Fechar', { "duration": 2500 });
-            }
-
-            this._service.getProductInfo(Number(id)).subscribe((data: any) => {
-              this._service.openProductPage(data);
-              this._router.navigate(['/product']);
-            });
-          });
-        }
-
-        this._snackBar.open('Produto anunciado!', 'Fechar', { "duration": 2500 });
-      } else {
-        this._snackBar.open('Erro ao anunciar produto!', 'Fechar', { "duration": 2500 });
+    if (this.form.get('promover')?.value) {
+      var event_product: any = {
+        title: 'Produto',
+        key_price: '5,00 €',
+        price: null,
+        rating: 0,
+        description: "",
+        comments: [],
+        categories: [""],
+        platform: [""],
+        pegi: "",
+        event: ad,
+        type: 'promotion',
       }
-    });  
+      event_product.event.img = this.uploadPhoto();
+
+      this._service.openCartPage(event_product);
+      this._router.navigate(['/checkout']);
+    } else {
+      this._service.addProduct(ad).subscribe((data: any) => {
+        if (data.v == true) {
+          var img = this.uploadPhoto();
+          var id = data.m;
+
+          if (img != null) {
+            this._service.uploadProductPhoto(img, Number(data.m)).subscribe((data: any) => {
+              if (data.v == true) {
+                this._snackBar.open('Produto anunciado!', 'Fechar', { "duration": 2500 });
+              } else {
+                this._snackBar.open('Erro ao anunciar produto!', 'Fechar', { "duration": 2500 });
+              }
+  
+              this._service.getProductInfo(Number(id)).subscribe((data: any) => {
+                this._service.openProductPage(data);
+                this._router.navigate(['/product']);
+              });
+            });
+          }
+  
+          this._snackBar.open('Produto anunciado!', 'Fechar', { "duration": 2500 });
+        } else {
+          this._snackBar.open('Erro ao anunciar produto!', 'Fechar', { "duration": 2500 });
+          console.log(data);
+        }
+      }); 
+    }
   }
 
   get local() { return this.form.get('local') };

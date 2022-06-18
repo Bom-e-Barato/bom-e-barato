@@ -36,7 +36,6 @@ export class SearchComponent implements OnInit {
       custojusto : false,
       ebay : false,
       olx : false,
-      kuantokusta : false,
       bomebarato : false
     });
 
@@ -215,6 +214,14 @@ export class SearchComponent implements OnInit {
   ngOnDestroy() {
     this.subscriptionF.unsubscribe();
     this.subscriptionC.unsubscribe();
+  }
+
+  getProductFromType(type: string) {
+    if (type == 'second') {
+      return this.products.filter((p: product) => p.marketplace == "Custo Justo" || p.marketplace == "eBay" || p.marketplace == "OLX" || p.marketplace ==  "Bom e Barato");
+    } else {
+      return this.products.filter((p: product) => p.marketplace == "Kuantokusta");
+    }
   }
 }
 

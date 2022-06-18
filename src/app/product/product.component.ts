@@ -50,8 +50,10 @@ export class ProductComponent implements OnInit {
       } else {
         if (data.marketplace == 'OLX')
           return 'http://localhost:4200/assets/img/olx.png';
-        else
+        else if (data.marketplace == 'Custo Justo')
           return 'http://localhost:4200/assets/img/custojusto.png';
+        else
+          return 'http://localhost:4200/assets/img/kuantokusta.png';
       }
     }
   }
