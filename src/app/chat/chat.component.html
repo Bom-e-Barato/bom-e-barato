@@ -70,10 +70,10 @@
             <div class="chat">
                 <div *ngFor="let m of messages_sent">
                     <div *ngIf="logged_user_id==m.sender" class="message is-sent">
-                        <p><b>{{m.sender}}: </b>{{m.text}}</p>
+                        <p>{{m.text}}</p>
                     </div>
                     <div *ngIf="!(logged_user_id==m.sender)" class="message is-received">
-                        <p><b>{{m.sender}}: </b>{{m.text}}</p>
+                        <p>{{m.text}}</p>
                     </div>
                 </div>
             </div>

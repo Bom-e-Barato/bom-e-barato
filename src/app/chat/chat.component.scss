@@ -39,7 +39,7 @@ mat-grid-list{
     flex-direction: column;
     font-size: 1.25rem;
     // margin: 0 auto 1rem;
-    max-width: 600px;
+    max-width: 400px;
     padding: 0.5rem 1.5rem;
   }
 
@@ -55,7 +55,7 @@ mat-grid-list{
 .message.is-sent {
     background-color: #248bf5;
     color: #fff; 
-
+    width: 400px;
     /* use align-self */
     align-self: flex-end;
     float: right;
@@ -64,5 +64,6 @@ mat-grid-list{
 .message.is-received {
     background-color: #e5e5ea;
     color: #000;
+
 }
   

@@ -464,6 +464,9 @@ export class SharedService {
   }
     
   addMessage(receiver_id : number, message : string) {
+    console.log("receiver_id");
+    console.log(receiver_id);
+    
     var token = localStorage.getItem('token');
     
     const httpOptions = {
@@ -503,10 +506,7 @@ export class SharedService {
     return this._http.delete(this.AD_API + '/delete_advertisement/' + id, httpOptions);
   }
 
-
-
-
-  getMessages() {
+  getMessages() {    
     var token = localStorage.getItem('token');
 
     const httpOptions = {

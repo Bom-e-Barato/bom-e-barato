@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SharedService } from '../shared.service';
 
 export interface chat {
@@ -43,39 +43,26 @@ export class ChatComponent implements OnInit {
   // just for testing purposes
   loggedin_username : string = "";
 
-  constructor(private _service : SharedService, private _router : Router, private route : ActivatedRoute) {
-    this.route.queryParams.subscribe(params => {
-      if(Object.keys(params).length > 0) {
-        console.log(params);
-        this.loadPage(Number(params['id']));
-        this.openChat(params['id']);
-      } else {
-        this.loadPage(null);
-      }
-    });
+  constructor(private _service : SharedService, private _router : Router) {
+    this.loadPage(null);
   }
 
   ngOnInit(): void {
   }
 
   openChat(sender: any) {
-    console.log("open chat");
-    
-    console.log(sender);
     
     this.title = sender.name;
     this.messages_sent = [];
-    this.messages_received = [];
     this.seller_id = sender.id;
-    
-    this.chat_data.forEach(element => {      
+
+    this.chat_data.forEach(element => {
+       
       if((element.sender == this.logged_user_id && element.receiver == Number(this.seller_id)) || (element.sender == Number(this.seller_id) && element.receiver == this.logged_user_id)) {
         this.messages_sent.push({id: element.id, sender: element.sender, text: element.message});
       }
     });
-    console.log(this.messages_sent);
     
-
     this.messages_sent.sort( (a,b) => (a.id < b.id) ? 1 : -1 );
   }
 
@@ -85,57 +72,56 @@ export class ChatComponent implements OnInit {
     this._service.addMessage(receiver_id, this.content).subscribe((data:any) => {
       if(data.v == true) {
         console.log("Message sent");
-        this.refreshChat(receiver_id);
       } else {
         console.log(data);
         
         console.error("Error while trying to send the message. ");        
       }
     });
+    this.loadPage(receiver_id);
   }
 
-  refreshChat(chat_id : number) {
-    this._service.getConversation(chat_id).subscribe((data : any) => {
-      console.log(data);
-      data.forEach((element : any) => {
-        if(element.includes("sender:")) {
-          this.chat_data.push({id:this.chat_data.length+1, sender:this.logged_user_id, receiver: chat_id, message:element.split("sender:").pop()})
-        } else if(element.includes("receiver:")) {
-          this.chat_data.push({id: this.chat_data.length+1, sender: chat_id, receiver: this.logged_user_id, message: element.split("receiver:").pop()})
-        }
-      });
-
-      this.openChat(chat_id);
-    });
-  }
 
   loadPage(chat_id : number | null) {
     this._service.getCredentials().subscribe((data:any) => {
       if(data.v == true) {        
         this.loggedin_username = data.info.first_name;
-        this.logged_user_id = data.info.id;        
+        this.logged_user_id = data.info.id;            
                 
         // Get all id and name for users with existing chat
         this._service.getMessages().subscribe((data : any) => {
           
           this.users = data;
-          console.log(this.users);
           
           // Get all chat messages
           this.chat_data = [];
           this.users.forEach((element: any) => {
-            console.log(element.id);
-                        
+
             this._service.getConversation(element.id).subscribe((data : any) => {
-              console.log("data");
-              console.log(data);          
+
               data.forEach((e : any) => {
+                
                 if(e.includes("sender:")) {
                   this.chat_data.push({id:this.chat_data.length+1, sender:this.logged_user_id, receiver: element.id, message:e.split("sender:").pop()})
                 } else if(e.includes("receiver:")) {
                   this.chat_data.push({id: this.chat_data.length+1, sender: element.id, receiver: this.logged_user_id, message: e.split("receiver:").pop()})
                 }
               });
+
+
+              
+              if(chat_id != null) {
+                
+                var user : any;
+                this.users.forEach(element => {
+                  if(element.id == chat_id) {
+                    user = element;
+                  }
+                });
+                
+                this.openChat(user);
+              }
+
             });
 
           });          
