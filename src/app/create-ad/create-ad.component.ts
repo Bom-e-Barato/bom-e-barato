@@ -100,6 +100,7 @@ export class CreateAdComponent implements OnInit {
           this._snackBar.open('Produto anunciado!', 'Fechar', { "duration": 2500 });
         } else {
           this._snackBar.open('Erro ao anunciar produto!', 'Fechar', { "duration": 2500 });
+          console.log(data);
         }
       }); 
     }

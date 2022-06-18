@@ -44,6 +44,7 @@ import { MatSelectCountryModule } from "@angular-material-extensions/select-coun
 import { MatStepperModule } from '@angular/material/stepper';
 import { SendMessageComponent } from './show-product/send-message/send-message.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { PubComponent } from './pub/pub.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     CategoryComponent,
     CheckoutComponent,
     DoneComponent,
-    SendMessageComponent
+    SendMessageComponent,
+    PubComponent,
   ],
   imports: [
     BrowserModule,
