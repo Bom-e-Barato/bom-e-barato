@@ -38,6 +38,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { DoneComponent } from './checkout/done/done.component';
+import { MatSelectCountryModule } from "@angular-material-extensions/select-country";
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -51,7 +55,9 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     SearchComponent,
     ProductComponent,
     ChatComponent,
-    CategoryComponent
+    CategoryComponent,
+    CheckoutComponent,
+    DoneComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +91,9 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     MatSelectModule,
     MatSnackBarModule,
     ImageCropperModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    MatSelectCountryModule.forRoot('pt'),
+    MatStepperModule
   ],
   providers: [],
   bootstrap: [AppComponent]
