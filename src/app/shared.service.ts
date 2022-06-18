@@ -401,7 +401,16 @@ export class SharedService {
 
   /* Get all the products */
   getPromotedProducts() {
-    return this._http.get(this.AD_API + '/get_promoted_ads');
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    }
+
+    return this._http.get(this.AD_API + '/get_promoted_ads', httpOptions);
   }
 
   getProducts(filter: string, location: string) {

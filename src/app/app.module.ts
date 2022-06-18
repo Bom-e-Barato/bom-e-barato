@@ -42,6 +42,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { DoneComponent } from './checkout/done/done.component';
 import { MatSelectCountryModule } from "@angular-material-extensions/select-country";
 import { MatStepperModule } from '@angular/material/stepper';
+import { SendMessageComponent } from './show-product/send-message/send-message.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     ChatComponent,
     CategoryComponent,
     CheckoutComponent,
-    DoneComponent
+    DoneComponent,
+    SendMessageComponent
   ],
   imports: [
     BrowserModule,
