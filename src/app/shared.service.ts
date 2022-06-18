@@ -419,7 +419,7 @@ export class SharedService {
     var handler_args: any = {
       search_term: filter,
       max_pages: 1,
-      marketplaces: ['Bom e Barato', 'olx', 'cj', 'ebay'],
+      marketplaces: ['Bom e Barato', 'olx', 'cj', 'ebay', 'kk'],
       location: location.toLocaleLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "")
     };
 

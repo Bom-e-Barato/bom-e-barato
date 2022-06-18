@@ -43,6 +43,7 @@ import { DoneComponent } from './checkout/done/done.component';
 import { MatSelectCountryModule } from "@angular-material-extensions/select-country";
 import { MatStepperModule } from '@angular/material/stepper';
 import { SendMessageComponent } from './show-product/send-message/send-message.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { SendMessageComponent } from './show-product/send-message/send-message.c
     ImageCropperModule,
     MaterialFileInputModule,
     MatSelectCountryModule.forRoot('pt'),
-    MatStepperModule
+    MatStepperModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
