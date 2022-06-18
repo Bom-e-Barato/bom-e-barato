@@ -154,6 +154,10 @@ export class ShowProductComponent implements OnInit {
     }
   }
 
+  redirect(link:any){
+    window.open(link, '_blank');
+  }
+
   deleteAd() {
     this._service.deleteAd(this.product.id).subscribe((data: any) => {
       console.log(data);
