@@ -23,7 +23,7 @@ export class ProductComponent implements OnInit {
       this._service.openProductPage(this.data);
       this._router.navigate(['/product']);
     } else {
-      window.location.href = this.data.link;
+      window.open(this.data.link, '_blank');
     }
   }
 

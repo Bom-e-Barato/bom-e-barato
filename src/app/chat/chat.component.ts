@@ -51,14 +51,12 @@ export class ChatComponent implements OnInit {
   }
 
   openChat(sender: any) {
-    
     this.title = sender.name;
     this.messages_sent = [];
     this.seller_id = sender.id;
 
     this.chat_data.forEach(element => {
-       
-      if((element.sender == this.logged_user_id && element.receiver == Number(this.seller_id)) || (element.sender == Number(this.seller_id) && element.receiver == this.logged_user_id)) {
+      if ((element.sender == this.logged_user_id && element.receiver == Number(this.seller_id)) || (element.sender == Number(this.seller_id) && element.receiver == this.logged_user_id)) {
         this.messages_sent.push({id: element.id, sender: element.sender, text: element.message});
       }
     });
@@ -70,7 +68,7 @@ export class ChatComponent implements OnInit {
     var receiver_id = this.seller_id; 
     
     this._service.addMessage(receiver_id, this.content).subscribe((data:any) => {
-      if(data.v == true) {
+      if (data.v == true) {
         console.log("Message sent");
       } else {
         console.log(data);
@@ -78,9 +76,10 @@ export class ChatComponent implements OnInit {
         console.error("Error while trying to send the message. ");        
       }
     });
-    this.loadPage(receiver_id);
-  }
 
+    this.loadPage(receiver_id);
+    this.content = '';
+  }
 
   loadPage(chat_id : number | null) {
     this._service.getCredentials().subscribe((data:any) => {
@@ -98,10 +97,8 @@ export class ChatComponent implements OnInit {
           this.users.forEach((element: any) => {
 
             this._service.getConversation(element.id).subscribe((data : any) => {
-
               data.forEach((e : any) => {
-                
-                if(e.includes("sender:")) {
+                if (e.includes("sender:")) {
                   this.chat_data.push({id:this.chat_data.length+1, sender:this.logged_user_id, receiver: element.id, message:e.split("sender:").pop()})
                 } else if(e.includes("receiver:")) {
                   this.chat_data.push({id: this.chat_data.length+1, sender: element.id, receiver: this.logged_user_id, message: e.split("receiver:").pop()})
@@ -109,21 +106,17 @@ export class ChatComponent implements OnInit {
               });
 
 
-              
               if(chat_id != null) {
-                
                 var user : any;
                 this.users.forEach(element => {
                   if(element.id == chat_id) {
                     user = element;
                   }
                 });
-                
+
                 this.openChat(user);
               }
-
             });
-
           });          
         });
       } else {

@@ -57,7 +57,9 @@
     </div>
     <div class="col">
         <mat-card>
-            <h1>{{title}}</h1>
+            <div class="row">
+                <h1>{{title}}</h1>
+            </div>
             <!-- <div class="chat">
 
                 <div class="message is-sent" *ngFor="let m of messages_sent">
@@ -66,24 +68,27 @@
                 <div class="message is-received" *ngFor="let m of messages_received">
                 </div>
             </div> -->
-            
-            <div class="chat">
-                <div *ngFor="let m of messages_sent">
-                    <div *ngIf="logged_user_id==m.sender" class="message is-sent">
-                        <p>{{m.text}}</p>
-                    </div>
-                    <div *ngIf="!(logged_user_id==m.sender)" class="message is-received">
-                        <p>{{m.text}}</p>
+            <div class="row">
+                <div class="chat">
+                    <div *ngFor="let m of messages_sent">
+                        <div *ngIf="logged_user_id==m.sender" class="message is-sent">
+                            <p>{{m.text}}</p>
+                        </div>
+                        <div *ngIf="!(logged_user_id==m.sender)" class="message is-received">
+                            <p>{{m.text}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <mat-form-field appearance="outline">
-                <input matInput type="text" [(ngModel)]="content">
-                <button matSuffix mat-icon-button (click)="sendMessage()">
-                    <mat-icon>send</mat-icon>
-                </button>
-            </mat-form-field>
+            
+            <div class="row">
+                <mat-form-field appearance="outline" class="mx-auto justify-content-center">
+                    <input matInput type="text" [(ngModel)]="content" (keyup.enter)="sendMessage()">
+                    <button matSuffix mat-icon-button (click)="sendMessage()">
+                        <mat-icon>send</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
         </mat-card>
     </div>
 </div>

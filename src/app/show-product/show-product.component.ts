@@ -47,11 +47,8 @@ export class ShowProductComponent implements OnInit {
   constructor(private ref: ChangeDetectorRef,private _liveAnnouncer: LiveAnnouncer, private _service: SharedService, private _snackBar: MatSnackBar, private _router: Router, public dialog : MatDialog) {
     this.subscription = this._service.productOpened.subscribe((data: product) => {
       this.product = data;
-      console.log(this.product.name);
       this._service.getProducts(this.product.name,'').subscribe((data: any) => {
-        console.log(data);
         this.selectProducts(data);
-        console.log(this.products2);
         this.dataSource = new MatTableDataSource(this.products2);
         
         this.loading = false;
@@ -59,8 +56,6 @@ export class ShowProductComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.page = true;
-        
-        
       });
       if (this.product.seller == Number(localStorage.getItem('id'))) this.owner = true;
     });
@@ -71,8 +66,6 @@ export class ShowProductComponent implements OnInit {
       this.products = data as product[];
       
     });
-    //this.products = this._service.getPromotedProducts();
-   
 
     this.galleryOptions = [
       {
@@ -122,9 +115,7 @@ export class ShowProductComponent implements OnInit {
     ];
   }
 
-
-  ngAfterViewInit() {
-    
+  ngAfterViewInit() {    
   }
 
   selectProducts(product: product []) {
@@ -134,7 +125,6 @@ export class ShowProductComponent implements OnInit {
       for (var j = 0; j < product.length; j++) {
         if (product[j].marketplace == marketplace[i]) {
           this.products2.push(product[j]);
-          console.log(marketplace[i]);
           break;
         }
       }
@@ -154,13 +144,12 @@ export class ShowProductComponent implements OnInit {
     }
   }
 
-  redirect(link:any){
+  redirect(link: any) {
     window.open(link, '_blank');
   }
 
   deleteAd() {
     this._service.deleteAd(this.product.id).subscribe((data: any) => {
-      console.log(data);
       if (data.v == true) {
         this._service.openProductPage({id: 0, marketplace: '', name: '', price: 0, link: '', img: '', description: '', promoted: false, negotiable: false});
         this._snackBar.open('Anúncio eliminado!', 'Fechar', { "duration": 2500 });
@@ -178,5 +167,4 @@ export class ShowProductComponent implements OnInit {
       },
     });
   }
-
 }

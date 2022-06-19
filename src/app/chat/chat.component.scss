@@ -8,7 +8,7 @@ mat-card{
 mat-form-field{
     width: 80%;
     margin-left: auto;
-    margin-top: 23%;
+    margin-top: 50px;
 }
 
 mat-grid-tile{
@@ -23,7 +23,6 @@ mat-grid-list{
     margin-top: 5%;
 }
 
-
 .chat {
     display: flex;
     
@@ -31,7 +30,7 @@ mat-grid-list{
     flex-direction: column-reverse;
   }
   
-  .message {
+.message {
     background-color: #fff;
     border: 1px solid #e5e5ea;
     border-radius: 0.25rem;
@@ -41,7 +40,7 @@ mat-grid-list{
     // margin: 0 auto 1rem;
     max-width: 400px;
     padding: 0.5rem 1.5rem;
-  }
+}
 
 .message p {
     border-radius: 1.15rem;
@@ -64,6 +63,5 @@ mat-grid-list{
 .message.is-received {
     background-color: #e5e5ea;
     color: #000;
-
 }
   

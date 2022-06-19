@@ -410,7 +410,7 @@ export class SharedService {
       })
     }
 
-    return this._http.get(this.AD_API + '/get_promoted_ads', httpOptions);
+    return this._http.post(this.AD_API + '/get_promoted_ads', httpOptions);
   }
 
   getProducts(filter: string, location: string) {

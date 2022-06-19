@@ -28,7 +28,7 @@ export class SearchBarComponent implements OnInit {
         filter: [this.filterValue],
         location: [this.locationValue]
       }, {validator: locationValidator});
-    });    
+    });
   }
 
   ngOnInit(): void {
@@ -36,10 +36,6 @@ export class SearchBarComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value)),
     );
-
-    this.form.get('location')?.valueChanges.subscribe(value => {
-      this.districts.includes(value) == true || value == '' ? this.applyLocation() : null
-    });
   }
 
   /* Shorthands for form controls (used from within template) */
@@ -53,6 +49,7 @@ export class SearchBarComponent implements OnInit {
       this.location?.setErrors(null);
       var i = this.districts.findIndex(x => x.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "") == this.location?.value.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, ""));
       this.form.get('location')?.setValue(this.districts[i]);
+      this.applyLocation();
     }
   }
 
@@ -68,6 +65,7 @@ export class SearchBarComponent implements OnInit {
     this.locationValue = this.form.get('location')?.value;
     this.filterValue = this.form.get('filter')?.value;
     this._service.setFilter(this.filterValue, this.locationValue);
+    this._service.filter.subscribe((data: any) => console.log(data));
   }
 
   applySearch() {
