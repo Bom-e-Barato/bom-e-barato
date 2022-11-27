@@ -43,17 +43,17 @@ export class ProductComponent implements OnInit {
 
   getImage(data: any) {
     if (data.marketplace == 'Bom e Barato') {
-      return 'http://localhost:8000' + data.img;
+      return 'http://deti-tqs-01.ua.pt:8000' + data.img;
     } else {
       if (Array.from(data.img)[0] == 'h') {
         return data.img;
       } else {
         if (data.marketplace == 'OLX')
-          return 'http://localhost:4200/assets/img/olx.png';
+          return 'http://deti-tqs-01.ua.pt/assets/img/olx.png';
         else if (data.marketplace == 'Custo Justo')
-          return 'http://localhost:4200/assets/img/custojusto.png';
+          return 'http://deti-tqs-01.ua.pt/assets/img/custojusto.png';
         else
-          return 'http://localhost:4200/assets/img/kuantokusta.png';
+          return 'http://deti-tqs-01.ua.pt/assets/img/kuantokusta.png';
       }
     }
   }

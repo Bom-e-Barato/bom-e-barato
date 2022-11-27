@@ -13,12 +13,6 @@ import { Router } from '@angular/router';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { SendMessageComponent } from './send-message/send-message.component';
 
-const ELEMENT_DATA: product[] = [
-  {id: 0, marketplace: "OLX", name: "Asus ROG Strix RTX 3060 Ti V2 8GB GDDR6", price:749, link:"https://olx.pt", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},  
-  {id: 0, marketplace: "CustoJusto", name: "Asus ROG Strix RTX 1070 Ti V2 8GB GDDR5", price:560, link:"https://custojusto.pt", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},
-  {id: 0, marketplace: "eBay", name: "Asus ROG Strix RTX 3060 Ti V2 6GB GDDR6", price:500, link:"https://ebay.com", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},
-  {id: 0, marketplace: "Amazon", name: "Gigabyte GeForce RTX 3060 Ti VISION OC LHR 8GB GDDR6", price:770, link:"https://amazon.com", img:"", description:"", promoted:false, negotiable:false, category:"", location:""},
-];
 
 @Component({
   selector: 'app-show-product',
@@ -93,24 +87,24 @@ export class ShowProductComponent implements OnInit {
 
     this.galleryImages = [
       {
-        small: 'http://localhost:8000' + this.product.img,
-        medium: 'http://localhost:8000' + this.product.img,
-        big: 'http://localhost:8000' + this.product.img
+        small: 'http://deti-tqs-01.ua.pt:8000' + this.product.img,
+        medium: 'http://deti-tqs-01.ua.pt:8000' + this.product.img,
+        big: 'http://deti-tqs-01.ua.pt:8000' + this.product.img
       },
       {
-        small: 'http://localhost:8000' + this.product.img,
-        medium: 'http://localhost:8000' + this.product.img,
-        big: 'http://localhost:8000' + this.product.img
+        small: 'http://deti-tqs-01.ua.pt:8000' + this.product.img,
+        medium: 'http://deti-tqs-01.ua.pt:8000' + this.product.img,
+        big: 'http://deti-tqs-01.ua.pt:8000' + this.product.img
       },
       {
-        small: 'http://localhost:8000' + this.product.img,
-        medium: 'http://localhost:8000' + this.product.img,
-        big: 'http://localhost:8000' + this.product.img
+        small: 'http://deti-tqs-01.ua.pt:8000' + this.product.img,
+        medium: 'http://deti-tqs-01.ua.pt:8000' + this.product.img,
+        big: 'http://deti-tqs-01.ua.pt:8000' + this.product.img
       },      
       {
-        small: 'http://localhost:8000' + this.product.img,
-        medium: 'http://localhost:8000' + this.product.img,
-        big: 'http://localhost:8000' + this.product.img
+        small: 'http://deti-tqs-01.ua.pt:8000' + this.product.img,
+        medium: 'http://deti-tqs-01.ua.pt:8000' + this.product.img,
+        big: 'http://deti-tqs-01.ua.pt:8000' + this.product.img
       }      
     ];
   }

@@ -17,7 +17,7 @@ export class CreateAdComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   districts: string[] = ['Aveiro', 'Beja', 'Braga', 'Bragança', 'Castelo Branco', 'Coimbra', 'Évora', 'Faro', 'Guarda', 'Leiria', 'Lisboa', 'Portalegre', 'Porto', 'Santarém', 'Setúbal', 'Castelo', 'Vila Real', 'Viseu'];
-  categories: string[] = ['Automóveis','Ferramentas','Roupa','Imoveis', 'Eletrodomésticos', 'Eletrônicos', 'Desporto', 'Informática', 'Moda', 'Móveis', 'Outros'];
+  categories: string[] = ['Automóveis','Ferramentas','Roupa', 'Imóveis', 'Eletrodomésticos', 'Desporto', 'Tecnologia', 'Lazer', 'Móveis', 'Outros'];
   filteredOptions?: Observable<string[]>;
   filteredOptions2?: Observable<string[]>;
 
